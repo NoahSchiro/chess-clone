@@ -4,6 +4,8 @@
 #include "./pieces/knight.h"
 #include "./pieces/bishop.h"
 #include "./pieces/rook.h"
+#include "./pieces/queen.h"
+#include "./pieces/king.h"
 
 #include <iostream>
 
@@ -37,8 +39,12 @@ Board::Board() {
 	
 	pos.x = 2;
 	m_board[0][2] = Bishop(white, pos);
-	// m_board[0][3] = Piece(queen,  white, 0, 3);
-	// m_board[0][4] = Piece(king,   white, 0, 4);
+
+	pos.x = 3;
+	m_board[0][3] = Queen(white, pos);
+	
+	pos.x = 4;
+	m_board[0][4] = King(white, pos);
 
 	pos.x = 5;
 	m_board[0][5] = Bishop(white, pos);
@@ -70,12 +76,19 @@ Board::Board() {
 
 	pos.x = 1;
 	m_board[7][1] = Knight(black, pos);
+
 	pos.x = 2;
 	m_board[7][2] = Bishop(black, pos);
-	// m_board[7][3] = Piece(queen,  black, 7, 3);
-	// m_board[7][4] = Piece(king,   black, 7, 4);
+
+	pos.x = 3;
+	m_board[7][3] = Queen(black, pos);
+	
+	pos.x = 4;
+	m_board[7][4] = King(black, pos);
+
 	pos.x = 5;
 	m_board[7][5] = Bishop(black, pos);
+
 	pos.x = 6;
 	m_board[7][6] = Knight(black, pos);
 
