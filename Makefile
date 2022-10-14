@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = 
-OBJ = ./pieces/piece.o ./pieces/pawn.o board.o common.o 
+OBJ = ./pieces/piece.o ./pieces/pawn.o ./pieces/knight.o board.o common.o 
 
 %.o: %.cpp  %.h
 	$(CC) -c -o $@ $< $(CFLAGS)

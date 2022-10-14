@@ -1,5 +1,7 @@
 #include "board.h"
+
 #include "./pieces/pawn.h"
+#include "./pieces/knight.h"
 
 #include <iostream>
 
@@ -13,7 +15,6 @@ Board::Board() {
 	//Temp variables to make our lives easier
 	Players white = Players::WHITE;
 	Players black = Players::BLACK;
-
 	PieceTypes pawn   = PieceTypes::PAWN;
 	PieceTypes bishop = PieceTypes::BISHOP;
 	PieceTypes knight = PieceTypes::KNIGHT;
@@ -21,15 +22,24 @@ Board::Board() {
 	PieceTypes queen  = PieceTypes::QUEEN;
 	PieceTypes king   = PieceTypes::KING;
 
+	//I will make one coordinate structure to modify for each item
+	Coordinates pos;
+	pos.x = 0;
+	pos.y = 0;
+
 	//CURRENTLY BROKEN WHILE I WORK ON PIECES
 	//White back row
 	// m_board[0][0] = Piece(rook,   white, 0, 0);
-	// m_board[0][1] = Piece(knight, white, 0, 1);
+	
+	pos.x = 1;
+	m_board[0][1] = Knight(white, pos);
 	// m_board[0][2] = Piece(bishop, white, 0, 2);
 	// m_board[0][3] = Piece(queen,  white, 0, 3);
 	// m_board[0][4] = Piece(king,   white, 0, 4);
 	// m_board[0][5] = Piece(bishop, white, 0, 5);
-	// m_board[0][6] = Piece(knight, white, 0, 6);
+
+	pos.x = 6;
+	m_board[0][6] = Knight(white, pos);
 	// m_board[0][7] = Piece(rook,   white, 0, 7);
 
 	//White & Black pawn row
@@ -45,14 +55,21 @@ Board::Board() {
 		m_board[6][i] = Pawn(black, blackPos);
 	}
 
+	//For the black back row, the y position is 7
+	pos.y = 7;
+
 	// //Black back row
 	// m_board[7][0] = Piece(rook,   black, 7, 0);
-	// m_board[7][1] = Piece(knight, black, 7, 1);
+
+	pos.x = 1;
+	m_board[7][1] = Knight(black, pos);
 	// m_board[7][2] = Piece(bishop, black, 7, 2);
 	// m_board[7][3] = Piece(queen,  black, 7, 3);
 	// m_board[7][4] = Piece(king,   black, 7, 4);
 	// m_board[7][5] = Piece(bishop, black, 7, 5);
-	// m_board[7][6] = Piece(knight, black, 7, 6);
+
+	pos.x = 6;
+	m_board[7][6] = Knight(black, pos);
 	// m_board[7][7] = Piece(rook,   black, 7, 7);
 }
 
