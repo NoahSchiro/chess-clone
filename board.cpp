@@ -1,5 +1,7 @@
 #include "board.h"
 
+#include <iostream>
+
 //Constructor
 Board::Board() {
 
@@ -47,4 +49,42 @@ Board::Board() {
 
 void Board::cliShow() {
 
+	//Loop over the m_board
+	for(int i = 0; i < 8; i++) {
+		for(int j = 0; j < 8; j++) {
+
+			//If this position is null, print #
+			if(m_board[i][j].m_empty) {
+				std::cout << " #";
+
+			} else if(m_board[i][j].m_type == PieceTypes::PAWN) {
+				std::cout << " P";
+
+			} else if(m_board[i][j].m_type == PieceTypes::KNIGHT) {
+				std::cout << " N";
+
+			} else if(m_board[i][j].m_type == PieceTypes::BISHOP) {
+				std::cout << " B";
+
+			} else if(m_board[i][j].m_type == PieceTypes::ROOK) {
+				std::cout << " R";
+
+			} else if(m_board[i][j].m_type == PieceTypes::QUEEN) {
+				std::cout << " Q";
+
+			} else if(m_board[i][j].m_type == PieceTypes::KING) {
+				std::cout << " K";
+
+			//If we reach this, then there has been an error
+			} else {
+				std::cout << "!";
+
+			} 
+
+			//If it's the end of a row, add a new line
+			if(j == 7) {
+				std::cout << "\n";
+			}
+		}
+	}
 }

@@ -4,7 +4,10 @@
 
 int main() {
 
-	int board [8][8];
+	//Instatiate a new game
+	Board myBoard;
+
+	myBoard.cliShow();
 
 	return 0;
 }
