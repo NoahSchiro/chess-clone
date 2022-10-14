@@ -13,7 +13,8 @@ enum GameState {
 //List of players
 enum Players {
 	WHITE,
-	BLACK
+	BLACK,
+	BLANK
 };
 
 //Enumeration of the types of pieces
