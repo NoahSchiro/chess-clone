@@ -1,13 +1,14 @@
-CC = gcc
-CFLAGS =
+CC = g++
+CFLAGS = 
 OBJ = ./pieces/piece.o board.o common.o 
 
-%.o: %.c  %.h
+%.o: %.cpp  %.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-chess: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+chess: main.cpp $(OBJ)
+	$(CC) $^ $(CFLAGS) -o chess
 	rm *.o
+	rm ./pieces/piece.o
 
 clean:
 	rm chess
