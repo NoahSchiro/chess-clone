@@ -2,6 +2,8 @@
 
 #include "../common.cpp"
 
+#include <vector>
+
 /*
 Base class to represent a chess piece.
 Unlikely to be used directly
@@ -9,26 +11,30 @@ Unlikely to be used directly
 class Piece {
 public:
 
-	Piece();
+	//Null constructor
+	Piece() = default;
 
-	Piece(PieceTypes type,
-		  Players color,
-		  unsigned int locX,
-		  unsigned int locY);
+	Piece(PieceTypes  type,
+		  Players     color,
+		  Coordinates position);
 
-	//Tells us what type of piece this 
-	//is. Knight, queen, pawn, etc.
-	//virtual char getType() = 0;
 
-	//Todo: Delete, this will be in derived classes
-	PieceTypes m_type;
-	Players m_player;
+	//Getters
+	PieceTypes getType();
+	Players getColor();
+	Coordinates getPosition();
 
-	//Whether or not this piece is intialized or not
-	bool m_empty;
+	//Given the pieces position, what are the valid moves?
+	std::vector<Coordinates> generateValidMoves();
 
 private:
 
-	unsigned int m_locX;
-	unsigned int m_locY;
+	//What piece is this specifically?
+	PieceTypes   m_type;
+
+	//What side is this piece on
+	Players      m_color;
+
+	//Location
+	Coordinates m_position;
 };

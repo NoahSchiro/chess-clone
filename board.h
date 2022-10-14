@@ -18,7 +18,7 @@ public:
 	//Constructor
 	Board();
 
-	//Prints the board to the screen
+	//Prints the board to the terminal
 	void cliShow();
 
 private:
@@ -28,8 +28,4 @@ private:
 
 	//Current state of the game 
 	GameState m_state;
-
-	//Whoever must go next
-	Players m_turn;
-
 };
