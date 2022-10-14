@@ -3,6 +3,7 @@
 #include "./pieces/pawn.h"
 #include "./pieces/knight.h"
 #include "./pieces/bishop.h"
+#include "./pieces/rook.h"
 
 #include <iostream>
 
@@ -28,10 +29,9 @@ Board::Board() {
 	pos.x = 0;
 	pos.y = 0;
 
-	//CURRENTLY BROKEN WHILE I WORK ON PIECES
 	//White back row
-	// m_board[0][0] = Piece(rook,   white, 0, 0);
-	
+	m_board[0][0] = Rook(white, pos);
+
 	pos.x = 1;
 	m_board[0][1] = Knight(white, pos);
 	
@@ -45,7 +45,9 @@ Board::Board() {
 
 	pos.x = 6;
 	m_board[0][6] = Knight(white, pos);
-	// m_board[0][7] = Piece(rook,   white, 0, 7);
+
+	pos.x = 7;
+	m_board[0][7] = Rook(white, pos);
 
 	//White & Black pawn row
 	for(int i = 0; i < 8; i++) {
@@ -64,7 +66,8 @@ Board::Board() {
 	pos.y = 7;
 
 	//Black back row
-	// m_board[7][0] = Piece(rook,   black, 7, 0);
+	m_board[7][0] = Rook(black, pos);
+
 	pos.x = 1;
 	m_board[7][1] = Knight(black, pos);
 	pos.x = 2;
@@ -75,7 +78,9 @@ Board::Board() {
 	m_board[7][5] = Bishop(black, pos);
 	pos.x = 6;
 	m_board[7][6] = Knight(black, pos);
-	// m_board[7][7] = Piece(rook,   black, 7, 7);
+
+	pos.x = 7;
+	m_board[7][7] = Rook(black, pos);
 
 	//For every other position, it's just a blank piece
 	for(int i = 2; i < 6; i++) {
