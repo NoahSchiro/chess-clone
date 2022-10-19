@@ -24,16 +24,21 @@ public:
 	Players getColor();
 	Coordinates getPosition();
 
+	//Setters
+	void setType(PieceTypes input);
+	void setColor(Players input);
+	void setPosition(Coordinates input);
+
 	//Given the pieces position, what are the valid moves?
 	std::vector<Coordinates> generateValidMoves();
 
 private:
 
 	//What piece is this specifically?
-	PieceTypes   m_type;
+	PieceTypes  m_type;
 
 	//What side is this piece on
-	Players      m_color;
+	Players     m_color;
 
 	//Location
 	Coordinates m_position;

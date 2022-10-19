@@ -30,6 +30,15 @@ enum PieceTypes {
 	
 //Position on board
 struct Coordinates {
+
+	Coordinates() = default;
+
+	Coordinates(unsigned int first,
+				unsigned int second) {
+		x = first;
+		y = second;
+	}
+
 	unsigned int x;
 	unsigned int y;
 };

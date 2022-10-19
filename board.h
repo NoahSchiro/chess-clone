@@ -18,6 +18,9 @@ public:
 	//Constructor
 	Board();
 
+	void movePiece(Coordinates from,
+				   Coordinates to);
+
 	//Prints the board to the terminal
 	void cliShow();
 

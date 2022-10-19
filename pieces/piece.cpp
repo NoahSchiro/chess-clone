@@ -21,6 +21,19 @@ Coordinates Piece::getPosition() {
 	return m_position;
 }
 
+
+void Piece::setType(PieceTypes input) {
+	m_type = input;
+}
+
+void Piece::setColor(Players input) {
+	m_color = input;
+}
+
+void Piece::setPosition(Coordinates input) {
+	m_position = input;
+}
+
 std::vector<Coordinates> Piece::generateValidMoves() {
 
 	return {};

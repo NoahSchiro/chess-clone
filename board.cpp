@@ -27,9 +27,7 @@ Board::Board() {
 	PieceTypes king   = PieceTypes::KING;
 
 	//I will make one coordinate structure to modify for each item
-	Coordinates pos;
-	pos.x = 0;
-	pos.y = 0;
+	Coordinates pos(0, 0);
 
 	//White back row
 	m_board[0][0] = Rook(white, pos);
@@ -58,11 +56,8 @@ Board::Board() {
 	//White & Black pawn row
 	for(int i = 0; i < 8; i++) {
 
-		Coordinates whitePos, blackPos;
-		whitePos.x = i;
-		whitePos.y = 1;
-		blackPos.x = i;
-		blackPos.y = 6;
+		Coordinates whitePos(i, 1);
+		Coordinates blackPos(i, 6);
 
 		m_board[1][i] = Pawn(white, whitePos);
 		m_board[6][i] = Pawn(black, blackPos);
@@ -104,6 +99,44 @@ Board::Board() {
 			m_board[i][j] = Piece(PieceTypes::NONE, Players::BLANK, pos);
 		}
 	}
+}
+
+void Board::movePiece(Coordinates from,
+			          Coordinates to){
+
+	//Ensure valid coordinates
+	if(from.x > 7 || from.y < 0 ||
+	   to.x   > 7 || to.y   < 0) {
+		return;
+	}
+
+	//We will need this several times
+	Piece pieceToMove = m_board[from.y][from.x];
+
+	//Ensure there is a piece at the "from" coordinate
+	if(pieceToMove.getType() == PieceTypes::NONE) {
+		return;
+	}
+
+	//The piece cannot move to a position which is
+	//already occupied, unless that position is
+	//of the other color
+
+	//For the position we want to move to, is it the same color as
+	//the piece we are trying to move?
+	if(m_board[to.y][to.x].getColor() == pieceToMove.getColor()) {
+		return;
+	}
+
+	//Assign this piece a new position
+
+	//So the piece knows where it is
+	pieceToMove.setPosition(to);
+
+	//So that the board know's where it is
+	Piece temp              = m_board[to.y][to.x];
+	m_board[to.y][to.x]     = m_board[from.x][from.y];
+	m_board[from.y][from.x] = temp;
 }
 
 void Board::cliShow() {
