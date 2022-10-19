@@ -130,13 +130,29 @@ void Board::movePiece(Coordinates from,
 
 	//Assign this piece a new position
 
-	//So the piece knows where it is
+	//No matter what, the piece itself only needs to
+	//know where it is now
 	pieceToMove.setPosition(to);
 
-	//So that the board know's where it is
-	Piece temp              = m_board[to.y][to.x];
-	m_board[to.y][to.x]     = m_board[from.x][from.y];
-	m_board[from.y][from.x] = temp;
+	//For the board, it matters if "to" is occupied by nothing
+	//or by the opposite player
+	if(m_board[to.y][to.x].getColor() == Players::BLANK) {
+
+		//Swap the pieces position (from becomes blank,
+		//to takes on the value of the piece being moved)
+		Piece temp              = m_board[to.y][to.x];
+		m_board[to.y][to.x]     = pieceToMove;
+		m_board[from.y][from.x] = temp;
+	
+	//In the other case, then it must be the opposite color
+	} else {
+
+		//Remove the piece (it has been captured)
+		m_board[to.y][to.x] = pieceToMove;
+
+		//The old position gets a blank piece
+		m_board[from.x][from.y] = Piece();
+	}	
 }
 
 void Board::cliShow() {

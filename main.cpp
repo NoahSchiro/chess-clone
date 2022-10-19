@@ -13,8 +13,10 @@ int main() {
 	//"From" selects a pawn
 	Coordinates from(1,1);
 
-	//"To" directs it one unit forward
-	Coordinates to(1,2);
+	//"To" directs it directly
+	//to the king of the opposite
+	//side. Just to see that it can capture
+	Coordinates to(4,7);
 
 	//Move the piece
 	myBoard.movePiece(from, to);

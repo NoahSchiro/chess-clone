@@ -13,6 +13,7 @@ public:
 
 	//Null constructor
 	Piece() = default;
+	~Piece() = default;
 
 	Piece(PieceTypes  type,
 		  Players     color,
