@@ -24,6 +24,10 @@ public:
 	//Prints the board to the terminal
 	void cliShow();
 
+	//Getters
+	Piece* getBoard();
+
+
 private:
 
 	//The actual board (8 tiles by 8 tiles)

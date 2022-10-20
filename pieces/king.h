@@ -10,4 +10,6 @@ public:
 
 	King(Players     color,
 		 Coordinates position);
+
+	virtual std::vector<Coordinates> generateValidMoves(const Piece* state);
 };

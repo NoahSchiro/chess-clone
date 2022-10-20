@@ -34,7 +34,7 @@ void Piece::setPosition(Coordinates input) {
 	m_position = input;
 }
 
-std::vector<Coordinates> Piece::generateValidMoves() {
+std::vector<Coordinates> Piece::generateValidMoves(const Piece* state) {
 
 	return {};
 

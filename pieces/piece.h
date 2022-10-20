@@ -4,6 +4,9 @@
 
 #include <vector>
 
+//Forward declare board to avoid circular dependency
+class Board;
+
 /*
 Base class to represent a chess piece.
 Unlikely to be used directly
@@ -31,9 +34,9 @@ public:
 	void setPosition(Coordinates input);
 
 	//Given the pieces position, what are the valid moves?
-	std::vector<Coordinates> generateValidMoves();
+	virtual std::vector<Coordinates> generateValidMoves(const Piece* state);
 
-private:
+protected:
 
 	//What piece is this specifically?
 	PieceTypes  m_type;
