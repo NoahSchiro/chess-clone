@@ -5,7 +5,7 @@ Knight::Knight(Players     color,
 	: Piece(PieceTypes::KNIGHT, color, position) {}
 
 
-std::vector<Coordinates> Knight::generateValidMoves(const Piece* state) {
+std::vector<Coordinates> Knight::generateValidMoves() {
 
 	return {};
 }

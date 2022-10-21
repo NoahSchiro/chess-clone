@@ -10,19 +10,15 @@ int main() {
 	std::cout << "Move 0:\n";
 	myBoard.cliShow();
 
-	//"From" selects a pawn
-	Coordinates from(1,1);
+	std::vector<Coordinates> moves = myBoard.m_board[7][4].generateValidMoves();
 
-	//"To" directs it directly
-	//to the king of the opposite
-	//side. Just to see that it can capture
-	Coordinates to(4,7);
+	std::cout << moves.size() << "\n";
 
-	//Move the piece
-	myBoard.movePiece(from, to);
-
-	std::cout << "Move 1:\n";
-	myBoard.cliShow();
+	for(auto it : moves) {
+		int xPos = it.x;
+		int yPos = it.y;
+		std::cout << "(" << xPos << ", " << yPos << ")\n";
+	}
 
 	return 0;
 }

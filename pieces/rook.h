@@ -12,5 +12,5 @@ public:
 		 Coordinates position);
 
 
-	virtual std::vector<Coordinates> generateValidMoves(const Piece* state) override;
+	virtual std::vector<Coordinates> generateValidMoves() override;
 };

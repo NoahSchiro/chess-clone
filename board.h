@@ -24,14 +24,10 @@ public:
 	//Prints the board to the terminal
 	void cliShow();
 
-	//Getters
-	Piece* getBoard();
-
-
-private:
-
 	//The actual board (8 tiles by 8 tiles)
 	Piece m_board[8][8];
+
+private:
 
 	//Current state of the game 
 	GameState m_state;

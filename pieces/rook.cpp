@@ -5,7 +5,7 @@ Rook::Rook(Players     color,
 	: Piece(PieceTypes::ROOK, color, position) {}
 
 
-std::vector<Coordinates> Rook::generateValidMoves(const Piece* state) {
+std::vector<Coordinates> Rook::generateValidMoves() {
 
 	return {};
 }

@@ -19,12 +19,6 @@ Board::Board() {
 	//Temp variables to make our lives easier
 	Players white = Players::WHITE;
 	Players black = Players::BLACK;
-	PieceTypes pawn   = PieceTypes::PAWN;
-	PieceTypes bishop = PieceTypes::BISHOP;
-	PieceTypes knight = PieceTypes::KNIGHT;
-	PieceTypes rook   = PieceTypes::ROOK;
-	PieceTypes queen  = PieceTypes::QUEEN;
-	PieceTypes king   = PieceTypes::KING;
 
 	//I will make one coordinate structure to modify for each item
 	Coordinates pos(0, 0);

@@ -5,6 +5,6 @@ Bishop::Bishop(Players     color,
 	: Piece(PieceTypes::BISHOP, color, position) {}
 
 
-std::vector<Coordinates> Bishop::generateValidMoves(const Piece* state) {
+std::vector<Coordinates> Bishop::generateValidMoves() {
 	return {};
 }

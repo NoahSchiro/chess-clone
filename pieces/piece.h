@@ -34,7 +34,7 @@ public:
 	void setPosition(Coordinates input);
 
 	//Given the pieces position, what are the valid moves?
-	virtual std::vector<Coordinates> generateValidMoves(const Piece* state);
+	virtual std::vector<Coordinates> generateValidMoves();
 
 protected:
 
