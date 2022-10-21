@@ -24,28 +24,28 @@ Board::Board() {
 	Coordinates pos(0, 0);
 
 	//White back row
-	m_board[0][0] = Rook(white, pos);
+	m_board[0][0] = new Rook(white, pos);
 
 	pos.x = 1;
-	m_board[0][1] = Knight(white, pos);
+	m_board[0][1] = new Knight(white, pos);
 	
 	pos.x = 2;
-	m_board[0][2] = Bishop(white, pos);
+	m_board[0][2] = new Bishop(white, pos);
 
 	pos.x = 3;
-	m_board[0][3] = Queen(white, pos);
+	m_board[0][3] = new Queen(white, pos);
 	
 	pos.x = 4;
-	m_board[0][4] = King(white, pos);
+	m_board[0][4] = new King(white, pos);
 
 	pos.x = 5;
-	m_board[0][5] = Bishop(white, pos);
+	m_board[0][5] = new Bishop(white, pos);
 
 	pos.x = 6;
-	m_board[0][6] = Knight(white, pos);
+	m_board[0][6] = new Knight(white, pos);
 
 	pos.x = 7;
-	m_board[0][7] = Rook(white, pos);
+	m_board[0][7] = new Rook(white, pos);
 
 	//White & Black pawn row
 	for(int i = 0; i < 8; i++) {
@@ -53,36 +53,36 @@ Board::Board() {
 		Coordinates whitePos(i, 1);
 		Coordinates blackPos(i, 6);
 
-		m_board[1][i] = Pawn(white, whitePos);
-		m_board[6][i] = Pawn(black, blackPos);
+		m_board[1][i] = new Pawn(white, whitePos);
+		m_board[6][i] = new Pawn(black, blackPos);
 	}
 
 	//For the black back row, the y position is 7
 	pos.y = 7;
 
 	//Black back row
-	m_board[7][0] = Rook(black, pos);
+	m_board[7][0] = new Rook(black, pos);
 
 	pos.x = 1;
-	m_board[7][1] = Knight(black, pos);
+	m_board[7][1] = new Knight(black, pos);
 
 	pos.x = 2;
-	m_board[7][2] = Bishop(black, pos);
+	m_board[7][2] = new Bishop(black, pos);
 
 	pos.x = 3;
-	m_board[7][3] = Queen(black, pos);
+	m_board[7][3] = new Queen(black, pos);
 	
 	pos.x = 4;
-	m_board[7][4] = King(black, pos);
+	m_board[7][4] = new King(black, pos);
 
 	pos.x = 5;
-	m_board[7][5] = Bishop(black, pos);
+	m_board[7][5] = new Bishop(black, pos);
 
 	pos.x = 6;
-	m_board[7][6] = Knight(black, pos);
+	m_board[7][6] = new Knight(black, pos);
 
 	pos.x = 7;
-	m_board[7][7] = Rook(black, pos);
+	m_board[7][7] = new Rook(black, pos);
 
 	//For every other position, it's just a blank piece
 	for(int i = 2; i < 6; i++) {
@@ -90,7 +90,7 @@ Board::Board() {
 			
 			pos.x = j;
 			pos.y = i;
-			m_board[i][j] = Piece(PieceTypes::NONE, Players::BLANK, pos);
+			m_board[i][j] = new Piece(PieceTypes::NONE, Players::BLANK, pos);
 		}
 	}
 }
@@ -105,10 +105,10 @@ void Board::movePiece(Coordinates from,
 	}
 
 	//We will need this several times
-	Piece pieceToMove = m_board[from.y][from.x];
+	Piece* pieceToMove = m_board[from.y][from.x];
 
 	//Ensure there is a piece at the "from" coordinate
-	if(pieceToMove.getType() == PieceTypes::NONE) {
+	if(pieceToMove->getType() == PieceTypes::NONE) {
 		return;
 	}
 
@@ -118,7 +118,7 @@ void Board::movePiece(Coordinates from,
 
 	//For the position we want to move to, is it the same color as
 	//the piece we are trying to move?
-	if(m_board[to.y][to.x].getColor() == pieceToMove.getColor()) {
+	if(m_board[to.y][to.x]->getColor() == pieceToMove->getColor()) {
 		return;
 	}
 
@@ -126,15 +126,15 @@ void Board::movePiece(Coordinates from,
 
 	//No matter what, the piece itself only needs to
 	//know where it is now
-	pieceToMove.setPosition(to);
+	pieceToMove->setPosition(to);
 
 	//For the board, it matters if "to" is occupied by nothing
 	//or by the opposite player
-	if(m_board[to.y][to.x].getColor() == Players::BLANK) {
+	if(m_board[to.y][to.x]->getColor() == Players::BLANK) {
 
 		//Swap the pieces position (from becomes blank,
 		//to takes on the value of the piece being moved)
-		Piece temp              = m_board[to.y][to.x];
+		Piece* temp             = m_board[to.y][to.x];
 		m_board[to.y][to.x]     = pieceToMove;
 		m_board[from.y][from.x] = temp;
 	
@@ -145,7 +145,7 @@ void Board::movePiece(Coordinates from,
 		m_board[to.y][to.x] = pieceToMove;
 
 		//The old position gets a blank piece
-		m_board[from.x][from.y] = Piece();
+		m_board[from.x][from.y] = new Piece();
 	}	
 }
 
@@ -156,25 +156,25 @@ void Board::cliShow() {
 		for(int j = 0; j < 8; j++) {
 
 			//If this position is null, print #
-			if(m_board[i][j].getType() == PieceTypes::NONE) {
+			if(m_board[i][j]->getType() == PieceTypes::NONE) {
 				std::cout << " #";
 
-			} else if(m_board[i][j].getType() == PieceTypes::PAWN) {
+			} else if(m_board[i][j]->getType() == PieceTypes::PAWN) {
 				std::cout << " P";
 
-			} else if(m_board[i][j].getType() == PieceTypes::KNIGHT) {
+			} else if(m_board[i][j]->getType() == PieceTypes::KNIGHT) {
 				std::cout << " N";
 
-			} else if(m_board[i][j].getType() == PieceTypes::BISHOP) {
+			} else if(m_board[i][j]->getType() == PieceTypes::BISHOP) {
 				std::cout << " B";
 
-			} else if(m_board[i][j].getType() == PieceTypes::ROOK) {
+			} else if(m_board[i][j]->getType() == PieceTypes::ROOK) {
 				std::cout << " R";
 
-			} else if(m_board[i][j].getType() == PieceTypes::QUEEN) {
+			} else if(m_board[i][j]->getType() == PieceTypes::QUEEN) {
 				std::cout << " Q";
 
-			} else if(m_board[i][j].getType() == PieceTypes::KING) {
+			} else if(m_board[i][j]->getType() == PieceTypes::KING) {
 				std::cout << " K";
 
 			//If we reach this, then there has been an error

@@ -10,7 +10,7 @@ int main() {
 	std::cout << "Move 0:\n";
 	myBoard.cliShow();
 
-	std::vector<Coordinates> moves = myBoard.m_board[7][4].generateValidMoves();
+	std::vector<Coordinates> moves = myBoard.m_board[7][4]->generateValidMoves();
 
 	std::cout << moves.size() << "\n";
 
