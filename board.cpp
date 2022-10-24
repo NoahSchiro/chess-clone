@@ -151,8 +151,19 @@ void Board::movePiece(Coordinates from,
 
 void Board::cliShow() {
 
+	//This just prints the coordinate system (x axis labels)
+	std::cout << "  ";
+	for(int i = 0; i < 8; i++) {
+		std::cout << " " << i;
+	}
+	std::cout << " x\n";
+
 	//Loop over the m_board
 	for(int i = 0; i < 8; i++) {
+
+		//Prints the labels for the y axis
+		std::cout << " " << i;
+
 		for(int j = 0; j < 8; j++) {
 
 			//If this position is null, print #
@@ -189,4 +200,7 @@ void Board::cliShow() {
 			}
 		}
 	}
+
+	//Show that this is the y axis
+	std::cout << " y\n";
 }

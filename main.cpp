@@ -7,12 +7,10 @@ int main() {
 	//Instatiate a new game
 	Board myBoard;
 
-	std::cout << "Move 0:\n";
 	myBoard.cliShow();
 
-	std::vector<Coordinates> moves = myBoard.m_board[7][4]->generateValidMoves();
-
-	std::cout << moves.size() << "\n";
+	//Access the knights
+	std::vector<Coordinates> moves = myBoard.m_board[7][1]->generateValidMoves();
 
 	for(auto it : moves) {
 		int xPos = it.x;
