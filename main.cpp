@@ -9,11 +9,8 @@ int main() {
 
 	myBoard.cliShow();
 
-	//Let's say that it is NOT this pawn's first move
-	myBoard.m_board[1][6]->setFirstMove(false);
-
 	//Access the pawn
-	std::vector<Coordinates> moves = myBoard.m_board[1][6]->generateValidMoves();
+	std::vector<Coordinates> moves = myBoard.m_board[7][7]->generateValidMoves();
 
 	for(auto it : moves) {
 		int xPos = it.x;

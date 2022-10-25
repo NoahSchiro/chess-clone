@@ -10,7 +10,7 @@ The absolutely novel idea of creating a chess clone. Target language is C++ and 
     - [ ] Bishop
     - [x] King
     - [ ] Queen
-    - [ ] Rook
+    - [x] Rook
 ---
 
 Long term goals:

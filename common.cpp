@@ -33,12 +33,12 @@ struct Coordinates {
 
 	Coordinates() = default;
 
-	Coordinates(unsigned int first,
-				unsigned int second) {
+	Coordinates(int first,
+				int second) {
 		x = first;
 		y = second;
 	}
 
-	unsigned int x;
-	unsigned int y;
+	int x;
+	int y;
 };
