@@ -13,4 +13,10 @@ public:
 
 
 	virtual std::vector<Coordinates> generateValidMoves() override;
+
+	//Getters
+	bool getFirstMove() override;
+
+	//Setters
+	void setFirstMove(bool) override;
 };

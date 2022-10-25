@@ -83,3 +83,9 @@ std::vector<Coordinates> Knight::generateValidMoves() {
 
 	return ans;
 }
+
+bool Knight::getFirstMove() {
+	return false;
+}
+
+void Knight::setFirstMove(bool input) {}

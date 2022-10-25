@@ -9,6 +9,12 @@ Piece::Piece(PieceTypes  type,
 	m_position = position;
 }
 
+std::vector<Coordinates> Piece::generateValidMoves() {
+
+	return {};
+
+}
+
 PieceTypes Piece::getType() {
 	return m_type;
 }
@@ -21,6 +27,11 @@ Coordinates Piece::getPosition() {
 	return m_position;
 }
 
+bool Piece::getFirstMove() {
+	//This will generally only be used by the king,
+	//pawn, and rook. Everything else, just assume it's false
+	return false;
+}
 
 void Piece::setType(PieceTypes input) {
 	m_type = input;
@@ -34,8 +45,4 @@ void Piece::setPosition(Coordinates input) {
 	m_position = input;
 }
 
-std::vector<Coordinates> Piece::generateValidMoves() {
-
-	return {};
-
-}
+void Piece::setFirstMove(bool input) {}

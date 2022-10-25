@@ -73,3 +73,9 @@ std::vector<Coordinates> King::generateValidMoves() {
 
 	return ans; 
 }
+
+bool King::getFirstMove() {
+	return false;
+}
+
+void King::setFirstMove(bool input) {}

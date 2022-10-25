@@ -22,19 +22,20 @@ public:
 		  Players     color,
 		  Coordinates position);
 
+	//Given the pieces position, what are the valid moves?
+	virtual std::vector<Coordinates> generateValidMoves();
 
 	//Getters
 	PieceTypes getType();
 	Players getColor();
 	Coordinates getPosition();
+	virtual bool getFirstMove();
 
 	//Setters
 	void setType(PieceTypes input);
 	void setColor(Players input);
 	void setPosition(Coordinates input);
-
-	//Given the pieces position, what are the valid moves?
-	virtual std::vector<Coordinates> generateValidMoves();
+	virtual void setFirstMove(bool input);
 
 protected:
 

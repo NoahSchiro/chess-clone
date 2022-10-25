@@ -16,4 +16,10 @@ public:
 	//that it won't understand the concept of castling. This function is generally
 	//called by board and is added to/subtracted from based on the state of the board.
 	std::vector<Coordinates> generateValidMoves();
+
+	//Getters
+	bool getFirstMove() override;
+
+	//Setters
+	void setFirstMove(bool) override;
 };

@@ -19,4 +19,9 @@ public:
 	//from based on the state of the board.
 	std::vector<Coordinates> generateValidMoves() override;
 
+	//Getters
+	bool getFirstMove() override;
+
+	//Setters
+	void setFirstMove(bool) override;
 };

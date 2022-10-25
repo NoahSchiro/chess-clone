@@ -8,3 +8,9 @@ Bishop::Bishop(Players     color,
 std::vector<Coordinates> Bishop::generateValidMoves() {
 	return {};
 }
+
+bool Bishop::getFirstMove() {
+	return false;
+}
+
+void Bishop	::setFirstMove(bool input) {}
