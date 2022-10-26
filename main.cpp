@@ -11,7 +11,7 @@ int main() {
 	myBoard.cliShow();
 
 	//Access the kings moves
-	std::vector<Coordinates> moves = myBoard.m_board[6][1]->generateValidMoves(myBoard.m_board);
+	std::vector<Coordinates> moves = myBoard.m_board[0][0]->generateValidMoves(myBoard.m_board);
 
 	for(auto it : moves) {
 		int xPos = it.x;
@@ -19,8 +19,8 @@ int main() {
 		std::cout << "(" << xPos << ", " << yPos << ")\n";
 	}
 
-	Coordinates from(1, 6);
-	Coordinates to  (1, 2);
+	Coordinates from(0, 0);
+	Coordinates to  (4, 4);
 
 	myBoard.movePiece(from, to);
 
@@ -29,7 +29,7 @@ int main() {
 	myBoard.cliShow();
 
 	//Access the kings moves
-	std::vector<Coordinates> moves2 = myBoard.m_board[2][1]->generateValidMoves(myBoard.m_board);
+	std::vector<Coordinates> moves2 = myBoard.m_board[4][4]->generateValidMoves(myBoard.m_board);
 
 	for(auto it : moves2) {
 		int xPos = it.x;
