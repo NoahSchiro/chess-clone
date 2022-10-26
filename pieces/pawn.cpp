@@ -18,7 +18,11 @@ std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8]) {
 		if(m_firstMove) {
 			temp.x = m_position.x;
 			temp.y = m_position.y + 2;
-			ans.push_back(temp);
+	
+			//Only a valid move if the space is empty
+			if(board[temp.y][temp.x]->getColor() == Players::BLANK) {
+				ans.push_back(temp);
+			}
 		}
 
 		//If we have not reached the otherside of the board
@@ -27,18 +31,30 @@ std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8]) {
 			//The position directly in front of the pawn
 			temp.x = m_position.x;
 			temp.y = m_position.y + 1;
-			ans.push_back(temp);
+
+			//Only a valid move if the space is empty
+			if(board[temp.y][temp.x]->getColor() == Players::BLANK) {
+				ans.push_back(temp);
+			}
 
 			//The diagonal attack vectors
 			if(m_position.x != 0) {
 				temp.x = m_position.x - 1;
 				temp.y = m_position.y + 1;
-				ans.push_back(temp);
+
+				//Only a valid move if the space is occupied by enemy
+				if(board[temp.y][temp.x]->getColor() == Players::BLACK) {
+					ans.push_back(temp);
+				}
 			}
 			if(m_position.x != 7) {
 				temp.x = m_position.x + 1;
 				temp.y = m_position.y + 1;
-				ans.push_back(temp);
+
+				//Only a valid move if the space is occupied by enemy
+				if(board[temp.y][temp.x]->getColor() == Players::BLACK) {
+					ans.push_back(temp);
+				}
 			}
 		}
 
@@ -49,7 +65,11 @@ std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8]) {
 		if(m_firstMove) {
 			temp.x = m_position.x;
 			temp.y = m_position.y - 2;
-			ans.push_back(temp);
+
+			//Only a valid move if the space is empty
+			if(board[temp.y][temp.x]->getColor() == Players::BLANK) {
+				ans.push_back(temp);
+			}
 		}
 
 		//If we have not reached the otherside of the board
@@ -58,18 +78,30 @@ std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8]) {
 			//The position directly in front of the pawn
 			temp.x = m_position.x;
 			temp.y = m_position.y - 1;
-			ans.push_back(temp);
+
+			//Only a valid move if the space is empty
+			if(board[temp.y][temp.x]->getColor() == Players::BLANK) {
+				ans.push_back(temp);
+			}
 
 			//The diagonal attack vectors
 			if(m_position.x != 0) {
 				temp.x = m_position.x - 1;
 				temp.y = m_position.y - 1;
-				ans.push_back(temp);
+				
+				//Only a valid move if the space is occupied by enemy
+				if(board[temp.y][temp.x]->getColor() == Players::WHITE) {
+					ans.push_back(temp);
+				}
 			}
 			if(m_position.x != 7) {
 				temp.x = m_position.x + 1;
 				temp.y = m_position.y - 1;
-				ans.push_back(temp);
+				
+				//Only a valid move if the space is occupied by enemy
+				if(board[temp.y][temp.x]->getColor() == Players::WHITE) {
+					ans.push_back(temp);
+				}
 			}
 
 
