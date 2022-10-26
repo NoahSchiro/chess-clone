@@ -17,7 +17,7 @@ public:
 	//that it won't understand that it can't collide with other objects. This 
 	//function is generally called by board and is added to/subtracted 
 	//from based on the state of the board.
-	std::vector<Coordinates> generateValidMoves() override;
+	std::vector<Coordinates> generateValidMoves(Piece* board[8][8]) override;
 
 	//Getters
 	bool getFirstMove() override;

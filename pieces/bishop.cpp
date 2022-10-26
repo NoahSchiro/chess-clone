@@ -5,7 +5,7 @@ Bishop::Bishop(Players     color,
 	: Piece(PieceTypes::BISHOP, color, position) {}
 
 
-std::vector<Coordinates> Bishop::generateValidMoves() {
+std::vector<Coordinates> Bishop::generateValidMoves(Piece* board[8][8]) {
 	return {};
 }
 

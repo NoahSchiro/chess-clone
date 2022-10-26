@@ -5,7 +5,7 @@ Knight::Knight(Players     color,
 	: Piece(PieceTypes::KNIGHT, color, position) {}
 
 
-std::vector<Coordinates> Knight::generateValidMoves() {
+std::vector<Coordinates> Knight::generateValidMoves(Piece* board[8][8]) {
 
 	//Defining the possible move set for a knight is pretty easy
 	//We only really need to consider the test case where we are

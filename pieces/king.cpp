@@ -7,7 +7,7 @@ King::King(Players     color,
 	: Piece(PieceTypes::KING, color, position) {}
 
 
-std::vector<Coordinates> King::generateValidMoves() {
+std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 
 	//Defining the possible move set for a king is pretty easy
 	//We only really need to consider the test case where we are

@@ -15,7 +15,7 @@ public:
 	//version of the possible moves based on the information it has. This means
 	//that it won't understand the concept of castling. This function is generally
 	//called by board and is added to/subtracted from based on the state of the board.
-	std::vector<Coordinates> generateValidMoves();
+	std::vector<Coordinates> generateValidMoves(Piece* board[8][8]);
 
 	//Getters
 	bool getFirstMove() override;

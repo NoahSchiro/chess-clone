@@ -12,7 +12,7 @@ public:
 		   Coordinates position);
 
 
-	virtual std::vector<Coordinates> generateValidMoves() override;
+	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8]) override;
 
 	//Getters
 	bool getFirstMove() override;

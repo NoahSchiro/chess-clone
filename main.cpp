@@ -10,7 +10,7 @@ int main() {
 	myBoard.cliShow();
 
 	//Access the pawn
-	std::vector<Coordinates> moves = myBoard.m_board[7][7]->generateValidMoves();
+	std::vector<Coordinates> moves = myBoard.m_board[7][7]->generateValidMoves(myBoard.m_board);
 
 	for(auto it : moves) {
 		int xPos = it.x;

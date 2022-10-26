@@ -9,7 +9,7 @@ Piece::Piece(PieceTypes  type,
 	m_position = position;
 }
 
-std::vector<Coordinates> Piece::generateValidMoves() {
+std::vector<Coordinates> Piece::generateValidMoves(Piece* board[8][8]) {
 
 	return {};
 
