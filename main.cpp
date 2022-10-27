@@ -10,8 +10,8 @@ int main() {
 	std::cout << "Move 0:\n";
 	myBoard.cliShow();
 
-	//Access the bishops moves
-	std::vector<Coordinates> moves = myBoard.m_board[0][2]->generateValidMoves(myBoard.m_board);
+	//Access the queen's moves
+	std::vector<Coordinates> moves = myBoard.m_board[0][3]->generateValidMoves(myBoard.m_board);
 
 	for(auto it : moves) {
 		int xPos = it.x;
@@ -19,7 +19,7 @@ int main() {
 		std::cout << "(" << xPos << ", " << yPos << ")\n";
 	}
 
-	Coordinates from(2, 0);
+	Coordinates from(3, 0);
 	Coordinates to  (4, 4);
 
 	myBoard.movePiece(from, to);
@@ -27,7 +27,7 @@ int main() {
 	std::cout << "Move 1:\n";
 	myBoard.cliShow();
 
-	//Access the bishop moves
+	//Access the queen's moves
 	std::vector<Coordinates> moves2 = myBoard.m_board[4][4]->generateValidMoves(myBoard.m_board);
 
 	for(auto it : moves2) {
