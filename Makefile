@@ -15,7 +15,7 @@ chess: main.cpp $(OBJ)
 	$(CC) $^ -o chess $(CFLAGS)  
 	rm *.o
 	rm ./pieces/*.o
-	rm ./pieces/*.gch
+	rm ./graphics/*.h.gch
 
 clean:
 	rm chess
