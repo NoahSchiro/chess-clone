@@ -1,5 +1,8 @@
 #include <SDL2/SDL.h>
 
+#include "../common.cpp"
+#include "../board.h"
+
 class SDLHandler {
 public:
 
@@ -7,7 +10,7 @@ public:
 	SDLHandler();
 	~SDLHandler();
 
-	void update();
+	void update(Piece* board[8][8]);
 
 private:
 

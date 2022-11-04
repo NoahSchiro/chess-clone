@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -w -lSDL2
+CFLAGS = -w -lSDL2 -lSDL2_image
 OBJ = ./pieces/piece.o ./pieces/pawn.o ./pieces/knight.o ./pieces/bishop.o ./pieces/rook.o ./pieces/queen.o ./pieces/king.o board.o common.o ./graphics/SDLHandler.o
 GRAPHICS = ./graphics/SDLHandler.h
 
@@ -13,9 +13,10 @@ chess: main.cpp $(OBJ)
 	
 	# Compile main program
 	$(CC) $^ -o chess $(CFLAGS)  
-	rm *.o
-	rm ./pieces/*.o
-	rm ./graphics/*.h.gch
 
 clean:
+	rm *.o
+	rm ./pieces/*.o
+	rm ./graphics/*.o
+	rm ./graphics/*.h.gch
 	rm chess
