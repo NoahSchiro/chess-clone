@@ -1,6 +1,5 @@
 #include "SDLHandler.h"
 
-#include <SDL2/SDL_image.h>
 #include <iostream>
 
 SDLHandler::SDLHandler() {
@@ -20,13 +19,33 @@ SDLHandler::SDLHandler() {
 		return;
 	}
 
+	if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
+		fprintf(stderr, "could not init images: %s\n", SDL_GetError());
+		return;
+	}
+
 	//Make the surface of the window black
 	m_screenSurface = SDL_GetWindowSurface(m_window);
 	SDL_FillRect(m_screenSurface, NULL, SDL_MapRGB(m_screenSurface->format, 0x00, 0x00, 0x00));
 	SDL_UpdateWindowSurface(m_window);
 
 	//Next we set up the renderer
-	m_renderer =  SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+
+	//Load in the image assets
+	m_whitePawn   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Pawn_Light.bmp");
+	m_blackPawn   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Pawn_Dark.bmp");
+	m_whiteKnight = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Knight_Light.bmp");
+	m_blackKnight = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Knight_Dark.bmp");
+	m_whiteBishop = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Bishop_Light.bmp");
+	m_blackBishop = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Bishop_Dark.bmp");
+	m_whiteRook   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Rook_Light.bmp");
+	m_blackRook   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Rook_Dark.bmp");
+	m_whiteQueen  = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Queen_Light.bmp");
+	m_blackQueen  = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Queen_Dark.bmp");
+	m_whiteKing   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/King_Light.bmp");
+	m_blackKing   = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/King_Dark.bmp");
+
 }
 
 SDLHandler::~SDLHandler() {
@@ -37,10 +56,13 @@ SDLHandler::~SDLHandler() {
 
 void SDLHandler::update(Piece* board[8][8]) {
 
+	//We will clear the screen to black
+	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
+
 	//Clear drawing surface
 	SDL_RenderClear(m_renderer);
-    
-    //Rectangle we will draw for the
+
+    //Rectangle we will draw with
     SDL_Rect rect;
     rect.x = 0; //X position
     rect.y = 0; //Y position
@@ -84,14 +106,15 @@ void SDLHandler::update(Piece* board[8][8]) {
     	rect.y += m_tileSide;
     }
 
-
-
     //Define the dimensions of the image
     SDL_Rect textureRect;
     textureRect.x = 10;
     textureRect.y = 10;
     textureRect.w = 100;
     textureRect.h = 100;
+
+    //This is a standard "image" which will be adapted according to what we want to draw
+	SDL_Texture* img = NULL;
 
     //Next lets draw the pieces according to
     //the board layout that has been passed in
@@ -101,57 +124,55 @@ void SDLHandler::update(Piece* board[8][8]) {
     		//Store since we will use this a lot
     		Piece* temp = board[y][x];
 
-    		    //This is a standard "image" which will be adapted according to what we want to draw
-    			SDL_Texture* img = NULL;
-
     		//If the piece is white
     		if(temp->getColor() == Players::WHITE) {
 
     			if(temp->getType() == PieceTypes::PAWN) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Pawn_Light.bmp");
+				    img = m_whitePawn;
 
     			} else if (temp->getType() == PieceTypes::KNIGHT) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Knight_Light.bmp");
+				    img = m_whiteKnight;
 
     			} else if (temp->getType() == PieceTypes::BISHOP) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Bishop_Light.bmp");
+				    img = m_whiteBishop;
 
     			} else if (temp->getType() == PieceTypes::ROOK) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Rook_Light.bmp");
+				    img = m_whiteRook;
 
     			} else if (temp->getType() == PieceTypes::QUEEN) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Queen_Light.bmp");
+				    img = m_whiteQueen;
 
     			} else if (temp->getType() == PieceTypes::KING) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/King_Light.bmp");
+				    img = m_whiteKing;
     			}
 
     		//Black pieces
     		} else if (temp->getColor() == Players::BLACK) {
 
     			if(temp->getType() == PieceTypes::PAWN) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Pawn_Dark.bmp");
+				    img = m_blackPawn;
 
     			} else if (temp->getType() == PieceTypes::KNIGHT) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Knight_Dark.bmp");
+				    img = m_blackKnight;
 
     			} else if (temp->getType() == PieceTypes::BISHOP) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Bishop_Dark.bmp");
+				    img = m_blackBishop;
 
     			} else if (temp->getType() == PieceTypes::ROOK) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Rook_Dark.bmp");
+				    img = m_blackRook;
 
     			} else if (temp->getType() == PieceTypes::QUEEN) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/Queen_Dark.bmp");
+				    img = m_blackQueen;
 
     			} else if (temp->getType() == PieceTypes::KING) {
-				    img = IMG_LoadTexture(m_renderer, "./graphics/piecesBMP/King_Dark.bmp");
+				    img = m_blackKing;
     			}
     		}
 
     		//Only add the texture to the render IF it's not a blank image
     		if(temp->getColor() != Players::BLANK) {
-			    SDL_RenderCopy(m_renderer, img, NULL, &textureRect);
+
+			    SDL_RenderCopy(m_renderer, img, nullptr, &textureRect);
     		}
 
     		//No matter what, we want to increment to the next drawing area
@@ -162,7 +183,10 @@ void SDLHandler::update(Piece* board[8][8]) {
     	textureRect.x = 10;
     	textureRect.y += m_tileSide;
     }
-
     //Show
     SDL_RenderPresent(m_renderer);
+
+    //Free up this resource
+    img = NULL;
+    SDL_DestroyTexture(img);
 }

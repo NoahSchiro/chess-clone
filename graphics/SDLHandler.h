@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "../common.cpp"
 #include "../board.h"
@@ -14,9 +15,9 @@ public:
 
 private:
 
-	SDL_Window* m_window = NULL;
+	SDL_Window*   m_window = NULL;
 	SDL_Renderer* m_renderer = NULL;
-	SDL_Surface* m_screenSurface = NULL;
+	SDL_Surface*  m_screenSurface = NULL;
 
 	//Window dimensions
 	int m_width  = 1920;
@@ -25,5 +26,19 @@ private:
 	//Tile dimensions (tiles are square, 
 	//so we need side length)
 	int m_tileSide = 120;
+
+	//Image asset holders
+	SDL_Texture* m_whitePawn   = NULL;
+	SDL_Texture* m_blackPawn   = NULL;
+	SDL_Texture* m_whiteKnight = NULL;
+	SDL_Texture* m_blackKnight = NULL;
+	SDL_Texture* m_whiteBishop = NULL;
+	SDL_Texture* m_blackBishop = NULL;
+	SDL_Texture* m_whiteRook   = NULL;
+	SDL_Texture* m_blackRook   = NULL;
+	SDL_Texture* m_whiteQueen  = NULL;
+	SDL_Texture* m_blackQueen  = NULL;
+	SDL_Texture* m_whiteKing   = NULL;
+	SDL_Texture* m_blackKing   = NULL;
 
 };
