@@ -190,3 +190,28 @@ void SDLHandler::update(Piece* board[8][8]) {
     img = NULL;
     SDL_DestroyTexture(img);
 }
+
+void SDLHandler::clickHandler(Piece* board[8][8]) {
+
+	//Holds the coordinates of the mouse position
+	int x, y;
+	uint32_t buttons;
+
+	//Fetch the mouse position
+	SDL_GetMouseState(&x, &y);
+
+	//Convert to board position
+	//Recall that tiles are 120px square
+	x /= 120;
+	y /= 120;
+
+	//If we click outside of the board area, then ignore
+	if(x > 7 || y > 7) {
+		return;
+	}
+
+	//Print the mouse position
+	std::cout << "(" << x << ", " << y << ")\n";
+
+	return;
+}

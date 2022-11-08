@@ -13,6 +13,8 @@ public:
 
 	void update(Piece* board[8][8]);
 
+	void clickHandler(Piece* board[8][8]);
+
 private:
 
 	SDL_Window*   m_window = NULL;

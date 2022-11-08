@@ -32,6 +32,10 @@ int main(int, char **) {
     			
     		break;
 
+    		case SDL_MOUSEBUTTONDOWN:
+    			myHandler.clickHandler(myBoard.m_board);
+    		break;
+
     		default : {}
     	}
 
