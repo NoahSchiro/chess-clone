@@ -33,10 +33,10 @@ Board::Board() {
 	m_board[0][2] = new Bishop(white, pos);
 
 	pos.x = 3;
-	m_board[0][3] = new Queen(white, pos);
+	m_board[0][3] = new King(white, pos);
 	
 	pos.x = 4;
-	m_board[0][4] = new King(white, pos);
+	m_board[0][4] = new Queen(white, pos);
 
 	pos.x = 5;
 	m_board[0][5] = new Bishop(white, pos);
@@ -70,10 +70,10 @@ Board::Board() {
 	m_board[7][2] = new Bishop(black, pos);
 
 	pos.x = 3;
-	m_board[7][3] = new Queen(black, pos);
+	m_board[7][3] = new King(black, pos);
 	
 	pos.x = 4;
-	m_board[7][4] = new King(black, pos);
+	m_board[7][4] = new Queen(black, pos);
 
 	pos.x = 5;
 	m_board[7][5] = new Bishop(black, pos);

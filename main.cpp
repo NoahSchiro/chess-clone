@@ -1,40 +1,45 @@
 #include <iostream>
 
+#include "./graphics/SDLHandler.h"
 #include "board.h"
 
-int main() {
+int main(int, char **) {
 
-	//Instatiate a new game
+	//Set up intial game state
 	Board myBoard;
 
-	std::cout << "Move 0:\n";
-	myBoard.cliShow();
+	//Set up the sdl graphics
+	SDLHandler myHandler;
 
-	//Access the queen's moves
-	std::vector<Coordinates> moves = myBoard.m_board[0][3]->generateValidMoves(myBoard.m_board);
+    SDL_Event e;
+    bool quit = false;
+	while(!quit) {
 
-	for(auto it : moves) {
-		int xPos = it.x;
-		int yPos = it.y;
-		std::cout << "(" << xPos << ", " << yPos << ")\n";
-	}
+	    SDL_Event e;
+	    SDL_PollEvent(&e);
 
-	Coordinates from(3, 0);
-	Coordinates to  (4, 4);
+	    switch(e.type) {
+	    	
+    		case SDL_QUIT:
+    			quit = true;
+    		break;
 
-	myBoard.movePiece(from, to);
+    		case SDL_KEYDOWN:
 
-	std::cout << "Move 1:\n";
-	myBoard.cliShow();
+    			if(e.key.keysym.sym == SDLK_q) {
+    				quit = true;
+    			}
+    			
+    		break;
 
-	//Access the queen's moves
-	std::vector<Coordinates> moves2 = myBoard.m_board[4][4]->generateValidMoves(myBoard.m_board);
+    		default : {}
+    	}
 
-	for(auto it : moves2) {
-		int xPos = it.x;
-		int yPos = it.y;
-		std::cout << "(" << xPos << ", " << yPos << ")\n";
-	}
+        myHandler.update(myBoard.m_board);
+
+        //Delay 10 millisecond
+        SDL_Delay(10);
+    }
 
 	return 0;
 }
