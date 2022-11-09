@@ -11,12 +11,18 @@ int main(int, char **) {
 	//Set up the sdl graphics
 	SDLHandler myHandler;
 
+    //Where we last clicked
+	int x = -1;
+	int y = -1;
+
     SDL_Event e;
     bool quit = false;
 	while(!quit) {
 
 	    SDL_Event e;
 	    SDL_PollEvent(&e);
+
+
 
 	    switch(e.type) {
 	    	
@@ -32,10 +38,27 @@ int main(int, char **) {
     			
     		break;
 
+    		case SDL_MOUSEBUTTONDOWN:
+    			myHandler.clickHandler(x,y);
+    		break;
+
     		default : {}
     	}
 
-        myHandler.update(myBoard.m_board);
+    	std::vector<Coordinates> validMoves = {};
+
+    	//Is the last mouse click in valid coordinates?
+    	if(x > -1 && x < 8 &&
+    	   y > -1 && y < 8) {
+
+    		//If we clicked on a valid piece
+    		if(myBoard.m_board[y][x]->getType() != PieceTypes::NONE) {
+    			//Generate the valid moves for that piece
+    			validMoves = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
+    		}
+    	}
+
+        myHandler.update(myBoard.m_board, validMoves);
 
         //Delay 10 millisecond
         SDL_Delay(10);

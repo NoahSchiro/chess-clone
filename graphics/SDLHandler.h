@@ -11,7 +11,9 @@ public:
 	SDLHandler();
 	~SDLHandler();
 
-	void update(Piece* board[8][8]);
+	void update(Piece* board[8][8], std::vector<Coordinates> validMoved);
+
+	void clickHandler(int &x, int &y);
 
 private:
 
