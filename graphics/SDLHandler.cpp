@@ -54,7 +54,9 @@ SDLHandler::~SDLHandler() {
 	SDL_Quit();
 }
 
-void SDLHandler::update(Piece* board[8][8]) {
+//Piece* board - the current state of the board
+//int x        - the x position of a mouse click
+void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves) {
 
 	//We will clear the screen to black
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
@@ -75,18 +77,36 @@ void SDLHandler::update(Piece* board[8][8]) {
     for(int y = 0; y < 8; y++) {
     	for (int x = 0; x < 8; x++) {
 
-    		//This if block just controls for the
-    		//alternating lightness and darkness 
-    		//of the board
-    		if((y % 2 == 0 && x % 2 == 0 )||
-    		   (y % 2 == 1 && x % 2 == 1)) {
+    		//Flag to check if we want to color
+    		//this space we can move to 
+    		bool validMoveArea = false;
+
+    		//Check if our coordinate is in the valid moves
+    		for(int i = 0; i < validMoves.size(); i++) {
+    			if(validMoves[i].x == x && validMoves[i].y == y) {
+    				validMoveArea = true;
+    				validMoves.erase(validMoves.begin() + i);
+    			}
+    		}
+
+    		if(validMoveArea) {
+
+			    //Drawing in "light brown ish"
+			    //TODO: make this look less ugly
+			    SDL_SetRenderDrawColor(m_renderer, 229, 79, 7, 1);
+			    
+			    //Draw the rectangle
+			    SDL_RenderFillRect(m_renderer, &rect);
+
+    		} else if ((y % 2 == 0 && x % 2 == 0)||
+    		           (y % 2 == 1 && x % 2 == 1)) {
 
 			    //Drawing in "light brown ish"
 			    //TODO: make this look less ugly
 			    SDL_SetRenderDrawColor(m_renderer, 171, 101, 29, 1);
 			    
 			    //Draw the rectangle
-			    SDL_RenderFillRect(m_renderer, &rect);    			
+			    SDL_RenderFillRect(m_renderer, &rect);
 
     		} else {
 
@@ -99,7 +119,6 @@ void SDLHandler::update(Piece* board[8][8]) {
     		}
 
     		//At each step, we need to increment to the next drawing position
-
     		rect.x += m_tileSide;
     	}
     	rect.x = 0;
@@ -191,10 +210,9 @@ void SDLHandler::update(Piece* board[8][8]) {
     SDL_DestroyTexture(img);
 }
 
-void SDLHandler::clickHandler(Piece* board[8][8]) {
+void SDLHandler::clickHandler(int &x, int &y) {
 
 	//Holds the coordinates of the mouse position
-	int x, y;
 	uint32_t buttons;
 
 	//Fetch the mouse position
@@ -210,8 +228,4 @@ void SDLHandler::clickHandler(Piece* board[8][8]) {
 		return;
 	}
 
-	//Print the mouse position
-	std::cout << "(" << x << ", " << y << ")\n";
-
-	return;
 }
