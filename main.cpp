@@ -58,8 +58,6 @@ int main(int, char **) {
     		}
     	}
 
-    	std::cout << validMoves.size() << "\n";
-
         myHandler.update(myBoard.m_board, validMoves);
 
         //Delay 10 millisecond

@@ -89,34 +89,36 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
     			}
     		}
 
-    		if(validMoveArea) {
-
-			    //Drawing in "light brown ish"
-			    //TODO: make this look less ugly
-			    SDL_SetRenderDrawColor(m_renderer, 229, 79, 7, 1);
-			    
-			    //Draw the rectangle
-			    SDL_RenderFillRect(m_renderer, &rect);
-
-    		} else if ((y % 2 == 0 && x % 2 == 0)||
-    		           (y % 2 == 1 && x % 2 == 1)) {
+    		//This if statement just generates that checkboard look
+    		//by making sure two adjacent squares don't have the same color
+    		if ((y % 2 == 0 && x % 2 == 0)||
+    		    (y % 2 == 1 && x % 2 == 1)) {
 
 			    //Drawing in "light brown ish"
 			    //TODO: make this look less ugly
 			    SDL_SetRenderDrawColor(m_renderer, 171, 101, 29, 1);
-			    
-			    //Draw the rectangle
-			    SDL_RenderFillRect(m_renderer, &rect);
 
+				//If we have selected a piece and want to
+				//show where it can move, then display a "light red"
+				if(validMoveArea) {
+				    SDL_SetRenderDrawColor(m_renderer, 221, 91, 29, 1);
+				}
+			    
     		} else {
 
 			    //Drawing in "dark brown ish"
 			    //TODO: make this look less ugly
 			    SDL_SetRenderDrawColor(m_renderer, 91, 67, 33, 1);
 			    
-			    //Draw the rectangle
-			    SDL_RenderFillRect(m_renderer, &rect);
+			    //If we have selected a piece and want to
+				//show where it can move, then display a "light red"
+				if(validMoveArea) {
+				    SDL_SetRenderDrawColor(m_renderer, 141, 57, 33, 1);
+				}
     		}
+
+		    //Draw the rectangle
+		    SDL_RenderFillRect(m_renderer, &rect);
 
     		//At each step, we need to increment to the next drawing position
     		rect.x += m_tileSide;
