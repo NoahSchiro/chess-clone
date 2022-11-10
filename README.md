@@ -16,6 +16,18 @@ One of the design philosophies of this project is to make it fast, close to hard
     sudo apt install make
 
 ## Download and run
+I will, in the future, make releases of this repo so that you don't have to build anything. However, for the time being, the project is in a young enough state that I would not feel comfortable making a release of a half-baked product. For these reasons, this repository must be compiled and then ran.
+
+    # Download
+    git clone https://github.com/NoahSchiro/chess-clone.git
+    cd chess-clone
+    # Compile
+    make
+    # Run
+    ./chess
+
+Voila!
+
 ---
 
 Long term goals:
