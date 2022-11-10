@@ -16,7 +16,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	Coordinates temp;
 
 	//Left
-	if(m_position.x != 0) {
+	if(m_position.x > 0) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y;
 
@@ -28,7 +28,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top left
-	if(m_position.x != 0 || m_position.y != 0) {
+	if(m_position.x > 0 && m_position.y > 0) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y - 1;
 
@@ -40,7 +40,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top
-	if(m_position.y != 0) {
+	if(m_position.y > 0) {
 		temp.x = m_position.x;
 		temp.y = m_position.y - 1;
 
@@ -52,7 +52,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top right
-	if(m_position.x != 7 && m_position.y != 0) {
+	if(m_position.x < 7 && m_position.y > 0) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y - 1;
 
@@ -64,7 +64,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Right
-	if(m_position.x != 7) {
+	if(m_position.x < 7) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y;
 
@@ -76,7 +76,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom right
-	if(m_position.x != 7 && m_position.y != 7) {
+	if(m_position.x < 7 && m_position.y < 7) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y + 1;
 
@@ -88,7 +88,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom
-	if(m_position.y != 7) {
+	if(m_position.y < 7) {
 		temp.x = m_position.x;
 		temp.y = m_position.y + 1;
 
@@ -100,7 +100,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom left
-	if(m_position.x != 0 && m_position.y != 7) {
+	if(m_position.x > 0 && m_position.y < 7) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y + 1;
 
@@ -115,7 +115,9 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 }
 
 bool King::getFirstMove() {
-	return false;
+	return m_firstMove;
 }
 
-void King::setFirstMove(bool input) {}
+void King::setFirstMove(bool input) {
+	m_firstMove = input;
+}

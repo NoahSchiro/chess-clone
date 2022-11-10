@@ -47,4 +47,8 @@ protected:
 
 	//Location
 	Coordinates m_position;
+
+	//Whether or not the piece has moved yet
+	//Only relevant to pawn, king, rook
+	bool m_firstMove = true;
 };
