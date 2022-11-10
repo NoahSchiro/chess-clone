@@ -109,7 +109,13 @@ void Board::movePiece(Coordinates from,
 
 	//Ensure there is a piece at the "from" coordinate
 	if(pieceToMove->getType() == PieceTypes::NONE) {
+		std::cout << "Error [Board][movePiece]: Trying to move an object from invalid position!\n";
 		return;
+	}
+
+	//If the piece is the pawn, then we need to indicate that it has been moved already
+	if(pieceToMove->getType() == PieceTypes::PAWN) {
+		pieceToMove->setFirstMove(false);
 	}
 
 	//The piece cannot move to a position which is
@@ -119,10 +125,9 @@ void Board::movePiece(Coordinates from,
 	//For the position we want to move to, is it the same color as
 	//the piece we are trying to move?
 	if(m_board[to.y][to.x]->getColor() == pieceToMove->getColor()) {
+		std::cout << "Error [Board][movePiece]: Trying to move piece into teammate!\n";
 		return;
 	}
-
-	//Assign this piece a new position
 
 	//No matter what, the piece itself only needs to
 	//know where it is now
@@ -141,11 +146,11 @@ void Board::movePiece(Coordinates from,
 	//In the other case, then it must be the opposite color
 	} else {
 
-		//Remove the piece (it has been captured)
+		//The old position gets a new blank piece
+		m_board[from.y][from.x] = new Piece(PieceTypes::NONE, Players::BLANK, from);
+		
+		//Move the piece to the captured position
 		m_board[to.y][to.x] = pieceToMove;
-
-		//The old position gets a blank piece
-		m_board[from.x][from.y] = new Piece();
 	}	
 }
 
