@@ -112,6 +112,11 @@ void Board::movePiece(Coordinates from,
 		return;
 	}
 
+	//If the piece is the pawn, then we need to indicate that it has been moved already
+	if(pieceToMove->getType() == PieceTypes::PAWN) {
+		pieceToMove->setFirstMove(false);
+	}
+
 	//The piece cannot move to a position which is
 	//already occupied, unless that position is
 	//of the other color

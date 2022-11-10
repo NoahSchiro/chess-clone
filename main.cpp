@@ -19,6 +19,10 @@ int main(int, char **) {
 	std::vector<Coordinates> validMoves = {};
 	Piece* pieceToMove = nullptr;
 
+	//Who's turn it is. Always starts, white, but
+	//alternates on a successful move
+	Players turn = Players::WHITE;
+
     SDL_Event e;
     bool quit = false;
 	while(!quit) {
@@ -71,8 +75,8 @@ int main(int, char **) {
     		y = -1;
     	
     	//If we have not already established we want to move a piece
-    	//and we have clicked on something that isn't a blank space
-    	} else if (!pieceToMove && myBoard.m_board[y][x]->getType() != PieceTypes::NONE) {
+    	//and we have clicked on something that is the same color as the turn
+    	} else if (!pieceToMove && myBoard.m_board[y][x]->getColor() == turn) {
 			
 			//Generate the valid moves for that piece
 			validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
@@ -103,11 +107,15 @@ int main(int, char **) {
     		//Move piece
     		myBoard.movePiece(moveFrom, moveTo);
 
-    		//Reset
+    		//Reset everything
     		validMoves  = {};
     		pieceToMove = nullptr;
     		x = -1;
     		y = -1;
+
+    		//Alternate who's turn it is
+    		turn = Players::WHITE == turn ? Players::BLACK : Players::WHITE;
+    		std::cout << (Players::WHITE == turn) << "\n";
 
     	//If we have a piece to move but have clicked off somewhere else, reset
     	} else if (pieceToMove && !validMoveFlag) {
