@@ -123,7 +123,7 @@ std::vector<Coordinates> Queen::generateValidMoves(Piece* board[8][8]) {
 	//Go into the top left 
 	temp.x = m_position.x - 1;
 	temp.y = m_position.y - 1;
-	while(temp.x > 0 && temp.y > 0) {
+	while(temp.x >= 0 && temp.y >= 0) {
 		
 		//If the space is occupied, we cannot move
 		//space or any spaces beyond it
@@ -148,7 +148,7 @@ std::vector<Coordinates> Queen::generateValidMoves(Piece* board[8][8]) {
 	//Go into the top right 
 	temp.x = m_position.x + 1;
 	temp.y = m_position.y - 1;
-	while(temp.x < 8 && temp.y > 0) {
+	while(temp.x < 8 && temp.y >= 0) {
 		
 		//If the space is occupied, we cannot move
 		//space or any spaces beyond it
@@ -196,7 +196,7 @@ std::vector<Coordinates> Queen::generateValidMoves(Piece* board[8][8]) {
 	//Go into the bottom left 
 	temp.x = m_position.x - 1;
 	temp.y = m_position.y + 1;
-	while(temp.x > 0 && temp.y < 8) {
+	while(temp.x >= 0 && temp.y < 8) {
 		
 		//If the space is occupied, we cannot move
 		//space or any spaces beyond it

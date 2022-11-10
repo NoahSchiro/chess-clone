@@ -80,6 +80,7 @@ int main(int, char **) {
 			
 			//Generate the valid moves for that piece
 			validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
+			std::cout << validMoves.size() << "\n";
 			pieceToMove = myBoard.m_board[y][x];
 
 		//If we have no piece to move and we clicked on blank space, reset
@@ -115,7 +116,6 @@ int main(int, char **) {
 
     		//Alternate who's turn it is
     		turn = Players::WHITE == turn ? Players::BLACK : Players::WHITE;
-    		std::cout << (Players::WHITE == turn) << "\n";
 
     	//If we have a piece to move but have clicked off somewhere else, reset
     	} else if (pieceToMove && !validMoveFlag) {
