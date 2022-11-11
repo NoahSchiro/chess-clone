@@ -115,7 +115,6 @@ int main(int, char **) {
 
     		//Alternate who's turn it is
     		turn = Players::WHITE == turn ? Players::BLACK : Players::WHITE;
-    		myBoard.cliShow();
 
     	//If we have a piece to move but have clicked off somewhere else, reset
     	} else if (pieceToMove && !validMoveFlag) {
