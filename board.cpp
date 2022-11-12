@@ -7,6 +7,8 @@
 #include "./pieces/queen.h"
 #include "./pieces/king.h"
 
+
+#include <stdlib.h>
 #include <iostream>
 
 //Constructor
@@ -96,7 +98,7 @@ Board::Board() {
 }
 
 void Board::movePiece(Coordinates from,
-			          Coordinates to){
+			          Coordinates to) {
 
 	//Ensure valid coordinates
 	if(from.x > 7 || from.y < 0 ||
@@ -133,6 +135,12 @@ void Board::movePiece(Coordinates from,
 	//know where it is now
 	pieceToMove->setPosition(to);
 
+	bool isCastle = false;
+
+	//If we are trying to castle
+	if(m_board[from.y][from.x]->getType() == PieceTypes::KING &&
+	   abs(from.x - to.x) > 1) { isCastle = true; }
+
 	//For the board, it matters if "to" is occupied by nothing
 	//or by the opposite player
 	if(m_board[to.y][to.x]->getColor() == Players::BLANK) {
@@ -142,6 +150,77 @@ void Board::movePiece(Coordinates from,
 		Piece* temp             = m_board[to.y][to.x];
 		m_board[to.y][to.x]     = pieceToMove;
 		m_board[from.y][from.x] = temp;
+
+		//If it's a castle then we need to handle that as well
+		if(isCastle) {
+
+			Piece* rook;
+			Piece* blankSpot;
+			Coordinates rookPos;
+
+			//King side white
+			if(to.x == 1 && to.y == 0) {
+				
+				//Set it's internal position
+				rookPos.x = 2;
+				rookPos.y = 0;
+
+				//Get rook
+				rook      = m_board[0][0];
+				blankSpot = m_board[rookPos.y][rookPos.x];
+
+				//Set it's external position
+				m_board[rookPos.y][rookPos.x] = rook;
+				m_board[0][0]                 = blankSpot;
+
+			//King side black
+			} else if (to.x == 1 && to.y == 7) {
+	
+				//Set it's internal position
+				rookPos.x = 2;
+				rookPos.y = 7;
+
+				//Get rook
+				rook      = m_board[7][0];
+				blankSpot = m_board[rookPos.y][rookPos.x];
+
+				//Set it's external position
+				m_board[rookPos.y][rookPos.x] = rook;
+				m_board[7][0]                 = blankSpot;
+
+			//Queen side white
+			} else if (to.x == 5 && to.y == 0) {
+	
+				//Set it's internal position
+				rookPos.x = 4;
+				rookPos.y = 0;
+
+				//Get rook
+				rook      = m_board[0][7];
+				blankSpot = m_board[rookPos.y][rookPos.x];
+
+				//Set it's external position
+				m_board[rookPos.y][rookPos.x] = rook;
+				m_board[0][7]                 = blankSpot;			
+	
+			//Queen side black
+			} else if (to.x == 5 && to.y == 7) {
+	
+				//Set it's internal position
+				rookPos.x = 4;
+				rookPos.y = 7;
+
+				//Get rook
+				rook      = m_board[7][7];
+				blankSpot = m_board[rookPos.y][rookPos.x];
+
+				//Set it's external position
+				m_board[rookPos.y][rookPos.x] = rook;
+				m_board[7][7]                 = blankSpot;				
+			}
+			
+			rook->setPosition(rookPos);
+		}
 	
 	//In the other case, then it must be the opposite color
 	} else {
