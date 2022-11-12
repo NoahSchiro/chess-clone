@@ -16,7 +16,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	Coordinates temp;
 
 	//Left
-	if(m_position.x != 0) {
+	if(m_position.x > 0) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y;
 
@@ -28,7 +28,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top left
-	if(m_position.x != 0 || m_position.y != 0) {
+	if(m_position.x > 0 && m_position.y > 0) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y - 1;
 
@@ -40,7 +40,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top
-	if(m_position.y != 0) {
+	if(m_position.y > 0) {
 		temp.x = m_position.x;
 		temp.y = m_position.y - 1;
 
@@ -52,7 +52,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Top right
-	if(m_position.x != 7 && m_position.y != 0) {
+	if(m_position.x < 7 && m_position.y > 0) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y - 1;
 
@@ -64,7 +64,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Right
-	if(m_position.x != 7) {
+	if(m_position.x < 7) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y;
 
@@ -76,7 +76,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom right
-	if(m_position.x != 7 && m_position.y != 7) {
+	if(m_position.x < 7 && m_position.y < 7) {
 		temp.x = m_position.x + 1;
 		temp.y = m_position.y + 1;
 
@@ -88,7 +88,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom
-	if(m_position.y != 7) {
+	if(m_position.y < 7) {
 		temp.x = m_position.x;
 		temp.y = m_position.y + 1;
 
@@ -100,7 +100,7 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 	}
 
 	//Bottom left
-	if(m_position.x != 0 && m_position.y != 7) {
+	if(m_position.x > 0 && m_position.y < 7) {
 		temp.x = m_position.x - 1;
 		temp.y = m_position.y + 1;
 
@@ -111,11 +111,64 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 		}
 	}
 
-	return ans; 
+	//If the king has not moved
+	if(m_firstMove) {
+
+		int tx = m_position.x;
+		int ty = m_position.y;
+
+		//King side castle?
+		if(m_color == Players::WHITE &&							//If we are on the white side, and;
+		   board[ty][tx-1]->getType() == PieceTypes::NONE &&	//the bishop has moved, and;
+		   board[ty][tx-2]->getType() == PieceTypes::NONE &&	//the knight has moved, and;
+		   board[0][0]->getFirstMove()) {						//the rook has not moved
+
+			temp.x = m_position.x - 2;
+			temp.y = m_position.y;
+			ans.push_back(temp);
+
+		} else if (m_color == Players::BLACK &&							//If we are on the black side, and;
+		   		   board[ty][tx-1]->getType() == PieceTypes::NONE &&	//the bishop has moved, and;
+		   		   board[ty][tx-2]->getType() == PieceTypes::NONE &&	//the knight has moved, and;
+		   		   board[7][0]->getFirstMove()) {						//the rook has not moved
+
+			temp.x = m_position.x - 2;
+			temp.y = m_position.y;
+			ans.push_back(temp);
+
+		}
+
+		//Queen side castle?
+		if(m_color == Players::WHITE &&							//If we are on the white side, and;
+		   board[ty][tx+1]->getType() == PieceTypes::NONE &&  	//the queen has moved, and;
+		   board[ty][tx+2]->getType() == PieceTypes::NONE &&	//the bishop has moved, and;
+		   board[ty][tx+3]->getType() == PieceTypes::NONE &&	//the knight has moved, and;
+		   board[0][7]->getFirstMove()) {						//the rook has not moved
+
+			temp.x = m_position.x + 2;
+			temp.y = m_position.y;
+			ans.push_back(temp);
+
+		} else if (m_color == Players::BLACK &&							//If we are on the black side, and;
+		   		   board[ty][tx+1]->getType() == PieceTypes::NONE && 	//the queen has moved, and;
+		   		   board[ty][tx+2]->getType() == PieceTypes::NONE &&	//the bishop has moved, and;
+		   		   board[ty][tx+3]->getType() == PieceTypes::NONE &&	//the knight has moved, and;
+		   		   board[7][7]->getFirstMove()) {						//the rook has not moved
+
+			temp.x = m_position.x + 2;
+			temp.y = m_position.y;
+			ans.push_back(temp);
+
+		}
+	}
+
+	return ans;
 }
 
 bool King::getFirstMove() {
-	return false;
+	return m_firstMove;
 }
 
-void King::setFirstMove(bool input) {}
+void King::setFirstMove(bool input) {
+	m_firstMove = input;
+}

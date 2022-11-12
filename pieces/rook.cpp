@@ -119,7 +119,9 @@ std::vector<Coordinates> Rook::generateValidMoves(Piece* board[8][8]) {
 }
 
 bool Rook::getFirstMove() {
-	return false;
+	return m_firstMove;
 }
 
-void Rook::setFirstMove(bool input) {}
+void Rook::setFirstMove(bool input) {
+	m_firstMove = input;
+}

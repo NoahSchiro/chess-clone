@@ -18,8 +18,4 @@ public:
 
 	//Settes
 	void setFirstMove(bool) override;
-
-private:
-
-	bool m_firstMove = true;
 };
