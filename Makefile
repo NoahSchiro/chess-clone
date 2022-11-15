@@ -15,6 +15,6 @@ chess: ./src/main.cpp $(OBJ)
 	$(CC) $^ -o chess $(CFLAGS)  
 
 clean:
-	rm -rf *.o
+	find . -type f -name '*.o' -delete
 	rm ./src/graphics/*.h.gch
 	rm chess
