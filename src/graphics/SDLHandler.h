@@ -11,6 +11,8 @@ public:
 	SDLHandler();
 	~SDLHandler();
 
+	void drawBackground(std::vector<Coordinates> validMoves);
+
 	void update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective);
 
 	void clickHandler(int &x, int &y, Players perspective);

@@ -54,18 +54,7 @@ SDLHandler::~SDLHandler() {
 	SDL_Quit();
 }
 
-void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
-
-	//If the perspective is flipped from how it is normally
-	//represented in the game (the normal representation is 
-	//from the black perspective) then we need to draw invert
-	//where we think the valid moves are
-	if(perspective == Players::WHITE) {
-		for(int i = 0; i < validMoves.size(); i++) {
-			validMoves[i].x = 7-validMoves[i].x;
-			validMoves[i].y = 7-validMoves[i].y;
-		}	
-	}
+void SDLHandler::drawBackground(std::vector<Coordinates> validMoves) {
 
 	//We will clear the screen to black
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
@@ -135,6 +124,23 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves,
     	rect.x = 0;
     	rect.y += m_tileSide;
     }
+}
+
+void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
+
+	//If the perspective is flipped from how it is normally
+	//represented in the game (the normal representation is 
+	//from the black perspective) then we need to draw invert
+	//where we think the valid moves are
+	if(perspective == Players::WHITE) {
+		for(int i = 0; i < validMoves.size(); i++) {
+			validMoves[i].x = 7-validMoves[i].x;
+			validMoves[i].y = 7-validMoves[i].y;
+		}	
+	}
+
+	//Draw the background (the tiles and such)
+	drawBackground(validMoves);
 
     //Define the dimensions of the image
     SDL_Rect textureRect;
@@ -153,9 +159,12 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves,
 
     		//Store since we will use this a lot
     		Piece* temp;
-    		
+
+    		//If we are moving from the black perspective    		
     		if(perspective == Players::BLACK) {
     			temp = board[y][x];
+
+    		//If we are moving from the white perspective
     		} else {
     			temp = board[7-y][7-x];
     		}
@@ -246,9 +255,10 @@ void SDLHandler::clickHandler(int &x, int &y, Players perspective) {
 		return;
 	}
 
+	//If we are getting a click from the white
+	//perpective, then we need to invert it
 	if(perspective == Players::WHITE) {
 		x = 7-x;
 		y = 7-y;
 	}
-
 }
