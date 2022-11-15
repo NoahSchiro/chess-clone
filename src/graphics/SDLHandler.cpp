@@ -52,17 +52,13 @@ SDLHandler::~SDLHandler() {
 	SDL_Quit();
 }
 
-//Piece* board - the current state of the board
-//int x        - the x position of a mouse click
-void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves) {
+void SDLHandler::showWhitePosition(Piece* board[8][8], std::vector<Coordinates> validMoves){
 
-	//We will clear the screen to black
-	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
+}
 
-	//Clear drawing surface
-	SDL_RenderClear(m_renderer);
+void SDLHandler::showBlackPosition(Piece* board[8][8], std::vector<Coordinates> validMoves) {
 
-    //Rectangle we will draw with
+	//Rectangle we will draw with
     SDL_Rect rect;
     rect.x = 0; //X position
     rect.y = 0; //Y position
@@ -202,12 +198,29 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
     	textureRect.x = 10;
     	textureRect.y += m_tileSide;
     }
-    //Show
-    SDL_RenderPresent(m_renderer);
 
     //Free up this resource
     img = NULL;
     SDL_DestroyTexture(img);
+}
+
+void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
+
+	//We will clear the screen to black
+	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
+
+	//Clear drawing surface
+	SDL_RenderClear(m_renderer);
+
+   	//Draw the board based on perspective
+   	if(perspective == Players::WHITE) {
+   		//todo
+   	} else {
+   		showBlackPosition(board, validMoves);
+   	}
+
+    //Show
+    SDL_RenderPresent(m_renderer);
 }
 
 void SDLHandler::clickHandler(int &x, int &y) {

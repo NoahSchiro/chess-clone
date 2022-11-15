@@ -128,7 +128,7 @@ int main(int, char **) {
     		std::cout << "Unreachable! Should never execute!\n";
     	}
 
-        myHandler.update(myBoard.m_board, validMoves);
+        myHandler.update(myBoard.m_board, validMoves, Players::BLACK);
 
         //Delay 10 millisecond
         SDL_Delay(10);
