@@ -1,5 +1,7 @@
 #include "SDLHandler.h"
 
+#include <iostream>
+
 SDLHandler::SDLHandler() {
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -52,11 +54,24 @@ SDLHandler::~SDLHandler() {
 	SDL_Quit();
 }
 
-void SDLHandler::showWhitePosition(Piece* board[8][8], std::vector<Coordinates> validMoves){
+void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
 
-}
+	//If the perspective is flipped from how it is normally
+	//represented in the game (the normal representation is 
+	//from the black perspective) then we need to draw invert
+	//where we think the valid moves are
+	if(perspective == Players::WHITE) {
+		for(int i = 0; i < validMoves.size(); i++) {
+			validMoves[i].x = 7-validMoves[i].x;
+			validMoves[i].y = 7-validMoves[i].y;
+		}	
+	}
 
-void SDLHandler::showBlackPosition(Piece* board[8][8], std::vector<Coordinates> validMoves) {
+	//We will clear the screen to black
+	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
+
+	//Clear drawing surface
+	SDL_RenderClear(m_renderer);
 
 	//Rectangle we will draw with
     SDL_Rect rect;
@@ -137,7 +152,13 @@ void SDLHandler::showBlackPosition(Piece* board[8][8], std::vector<Coordinates> 
     	for (int x = 0; x < 8; x++) {
 
     		//Store since we will use this a lot
-    		Piece* temp = board[y][x];
+    		Piece* temp;
+    		
+    		if(perspective == Players::BLACK) {
+    			temp = board[y][x];
+    		} else {
+    			temp = board[7-y][7-x];
+    		}
 
     		//If the piece is white
     		if(temp->getColor() == Players::WHITE) {
@@ -202,28 +223,12 @@ void SDLHandler::showBlackPosition(Piece* board[8][8], std::vector<Coordinates> 
     //Free up this resource
     img = NULL;
     SDL_DestroyTexture(img);
-}
-
-void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
-
-	//We will clear the screen to black
-	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
-
-	//Clear drawing surface
-	SDL_RenderClear(m_renderer);
-
-   	//Draw the board based on perspective
-   	if(perspective == Players::WHITE) {
-   		//todo
-   	} else {
-   		showBlackPosition(board, validMoves);
-   	}
 
     //Show
     SDL_RenderPresent(m_renderer);
 }
 
-void SDLHandler::clickHandler(int &x, int &y) {
+void SDLHandler::clickHandler(int &x, int &y, Players perspective) {
 
 	//Holds the coordinates of the mouse position
 	uint32_t buttons;
@@ -239,6 +244,11 @@ void SDLHandler::clickHandler(int &x, int &y) {
 	//If we click outside of the board area, then ignore
 	if(x > 7 || y > 7) {
 		return;
+	}
+
+	if(perspective == Players::WHITE) {
+		x = 7-x;
+		y = 7-y;
 	}
 
 }

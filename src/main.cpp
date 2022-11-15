@@ -50,7 +50,7 @@ int main(int, char **) {
     		//Mouse press
     		case SDL_MOUSEBUTTONDOWN:
 
-    			myHandler.clickHandler(x,y);
+    			myHandler.clickHandler(x,y, turn);
     		break;
 
     		default : {}
@@ -128,7 +128,7 @@ int main(int, char **) {
     		std::cout << "Unreachable! Should never execute!\n";
     	}
 
-        myHandler.update(myBoard.m_board, validMoves, Players::BLACK);
+        myHandler.update(myBoard.m_board, validMoves, turn);
 
         //Delay 10 millisecond
         SDL_Delay(10);
