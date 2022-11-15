@@ -1,5 +1,7 @@
 #include "SDLHandler.h"
 
+#include <iostream>
+
 SDLHandler::SDLHandler() {
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -52,9 +54,7 @@ SDLHandler::~SDLHandler() {
 	SDL_Quit();
 }
 
-//Piece* board - the current state of the board
-//int x        - the x position of a mouse click
-void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves) {
+void SDLHandler::drawBackground(std::vector<Coordinates> validMoves) {
 
 	//We will clear the screen to black
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 1);
@@ -62,7 +62,7 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
 	//Clear drawing surface
 	SDL_RenderClear(m_renderer);
 
-    //Rectangle we will draw with
+	//Rectangle we will draw with
     SDL_Rect rect;
     rect.x = 0; //X position
     rect.y = 0; //Y position
@@ -124,6 +124,23 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
     	rect.x = 0;
     	rect.y += m_tileSide;
     }
+}
+
+void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves, Players perspective) {
+
+	//If the perspective is flipped from how it is normally
+	//represented in the game (the normal representation is 
+	//from the black perspective) then we need to draw invert
+	//where we think the valid moves are
+	if(perspective == Players::WHITE) {
+		for(int i = 0; i < validMoves.size(); i++) {
+			validMoves[i].x = 7-validMoves[i].x;
+			validMoves[i].y = 7-validMoves[i].y;
+		}	
+	}
+
+	//Draw the background (the tiles and such)
+	drawBackground(validMoves);
 
     //Define the dimensions of the image
     SDL_Rect textureRect;
@@ -141,7 +158,16 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
     	for (int x = 0; x < 8; x++) {
 
     		//Store since we will use this a lot
-    		Piece* temp = board[y][x];
+    		Piece* temp;
+
+    		//If we are moving from the black perspective    		
+    		if(perspective == Players::BLACK) {
+    			temp = board[y][x];
+
+    		//If we are moving from the white perspective
+    		} else {
+    			temp = board[7-y][7-x];
+    		}
 
     		//If the piece is white
     		if(temp->getColor() == Players::WHITE) {
@@ -202,15 +228,16 @@ void SDLHandler::update(Piece* board[8][8], std::vector<Coordinates> validMoves)
     	textureRect.x = 10;
     	textureRect.y += m_tileSide;
     }
-    //Show
-    SDL_RenderPresent(m_renderer);
 
     //Free up this resource
     img = NULL;
     SDL_DestroyTexture(img);
+
+    //Show
+    SDL_RenderPresent(m_renderer);
 }
 
-void SDLHandler::clickHandler(int &x, int &y) {
+void SDLHandler::clickHandler(int &x, int &y, Players perspective) {
 
 	//Holds the coordinates of the mouse position
 	uint32_t buttons;
@@ -228,4 +255,10 @@ void SDLHandler::clickHandler(int &x, int &y) {
 		return;
 	}
 
+	//If we are getting a click from the white
+	//perpective, then we need to invert it
+	if(perspective == Players::WHITE) {
+		x = 7-x;
+		y = 7-y;
+	}
 }
