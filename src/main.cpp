@@ -56,8 +56,10 @@ int main(int, char **) {
     		default : {}
     	}
 
+    	//Check if either king is in check / checkmate
     	GameState check = myBoard.isCheckmate();
 
+    	//Print result
     	if(check == GameState::WHITE_CHECK) {
     		std::cout << "White king in check!\n";
     	} else if (check == GameState::BLACK_CHECK) {
@@ -87,8 +89,22 @@ int main(int, char **) {
     	} else if (!pieceToMove && myBoard.m_board[y][x]->getColor() == turn) {
 			
 			//Generate the valid moves for that piece
-			validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
-			pieceToMove = myBoard.m_board[y][x];
+			//Note we cannot generate these moves if we are in check
+			if(
+
+			   //If we white king is in check and it's white's turn
+			   (turn == Players::WHITE && check != GameState::WHITE_CHECK) ||
+			   
+			   //If the black king is in check and it's black's turn
+			   (turn == Players::BLACK && check != GameState::BLACK_CHECK) ||
+			   
+			   //If we select the king
+			   (myBoard.m_board[y][x]->getColor() == turn && myBoard.m_board[y][x]->getType() == PieceTypes::KING)) {
+				
+				//Then we can move
+				validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
+				pieceToMove = myBoard.m_board[y][x];
+			}
 
 		//If we have no piece to move and we clicked on blank space, reset
     	} else if (!pieceToMove) {
