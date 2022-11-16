@@ -7,7 +7,6 @@
 #include "./pieces/queen.h"
 #include "./pieces/king.h"
 
-
 #include <stdlib.h>
 #include <iostream>
 
@@ -287,4 +286,81 @@ void Board::cliShow() {
 
 	//Show that this is the y axis
 	std::cout << " y\n";
+}
+
+GameState Board::isCheckmate() {
+
+	GameState ans;
+
+	//Store all of the squares that are threatened
+	std::vector<Coordinates> whiteTilesInThreat;
+	std::vector<Coordinates> blackTilesInThreat;
+
+	//Store where are king is
+	Coordinates whiteKingPos;
+	Coordinates blackKingPos;
+
+	//Loop through all the pieces, generate all of their moves, and check to see if they hit the king
+	for(int x = 0; x < 8; x++) {
+		for(int y = 0; y < 8; y++) {
+
+			//If we have found the king
+			if(m_board[y][x]->getType()  == PieceTypes::KING &&
+			   m_board[y][x]->getColor() == Players::WHITE) {
+
+				//Store it's location
+				whiteKingPos.x = x;
+				whiteKingPos.y = y;
+			
+			} else if (m_board[y][x]->getType()  == PieceTypes::KING &&
+					   m_board[y][x]->getColor() == Players::BLACK) {
+
+				//Store it's location
+				blackKingPos.x = x;
+				blackKingPos.y = y;
+			}
+
+			//If we come across a black piece
+			if(m_board[y][x]->getColor() == Players::BLACK) {
+
+				//Generate valid moves
+				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board);
+
+				//Add to our set
+				for(auto it : moves) {
+					whiteTilesInThreat.push_back(it);
+				}
+
+			//Same as above except opposite colors
+			} else if (m_board[y][x]->getColor() == Players::WHITE) {
+
+				//Generate valid moves
+				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board);
+
+				//Add to our set
+				for(auto it : moves) {
+					blackTilesInThreat.push_back(it);
+				}
+			}
+		}
+	}
+
+	//If the king's position is in that list, then it is in check
+	for(auto it : whiteTilesInThreat) {
+		if(whiteKingPos.x == it.x &&
+		   whiteKingPos.y == it.y) {
+
+			return GameState::WHITE_CHECK;
+		}
+	}
+
+	for(auto it : blackTilesInThreat) {
+		if(blackKingPos.x == it.x &&
+		   blackKingPos.y == it.y) {
+			
+			return GameState::BLACK_CHECK;
+		}
+	}
+
+	return ans;
 }

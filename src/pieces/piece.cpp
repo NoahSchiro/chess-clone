@@ -10,23 +10,7 @@ Piece::Piece(PieceTypes  type,
 }
 
 std::vector<Coordinates> Piece::generateValidMoves(Piece* board[8][8]) {
-
 	return {};
-
-}
-
-GameState Piece::isCheckmate(Piece* board[8][8]) {
-
-	GameState ans;
-
-	//The answer is different based on the color of the piece
-	if(getColor() == Players::WHITE) {
-		ans = GameState::WHITE_MOVE;
-	} else {
-		ans = GameState::BLACK_MOVE;
-	}
-
-	return ans;
 }
 
 PieceTypes Piece::getType() {

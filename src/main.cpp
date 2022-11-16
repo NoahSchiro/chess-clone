@@ -56,6 +56,14 @@ int main(int, char **) {
     		default : {}
     	}
 
+    	GameState check = myBoard.isCheckmate();
+
+    	if(check == GameState::WHITE_CHECK) {
+    		std::cout << "White king in check!\n";
+    	} else if (check == GameState::BLACK_CHECK) {
+    		std::cout << "Black king in check!\n";
+    	}
+
     	bool validMoveFlag = false;
     	
     	//Check if we have clicked somewhere that would be a valid move
