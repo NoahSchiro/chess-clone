@@ -25,6 +25,9 @@ public:
 	//Given the pieces position, what are the valid moves?
 	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8]);
 
+	//Is the king (on my side) threated or in checkmate?
+	GameState isCheckmate(Piece* board[8][8]);
+
 	//Getters
 	PieceTypes getType();
 	Players getColor();
