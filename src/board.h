@@ -25,7 +25,8 @@ public:
 	void cliShow();
 
 	//Is either king in check or checkmate?
-	GameState isCheckmate();
+	GameState isCheckmate(std::vector<Coordinates> &whiteTilesInThreat,
+						  std::vector<Coordinates> &blackTilesInThreat);
 
 	//The actual board (8 tiles by 8 tiles)
 	Piece* m_board[8][8];

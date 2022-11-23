@@ -288,13 +288,10 @@ void Board::cliShow() {
 	std::cout << " y\n";
 }
 
-GameState Board::isCheckmate() {
+GameState Board::isCheckmate(std::vector<Coordinates> &whiteTilesInThreat,
+							 std::vector<Coordinates> &blackTilesInThreat) {
 
 	GameState ans;
-
-	//Store all of the squares that are threatened
-	std::vector<Coordinates> whiteTilesInThreat;
-	std::vector<Coordinates> blackTilesInThreat;
 
 	//Store where are king is
 	Coordinates whiteKingPos;
@@ -324,7 +321,7 @@ GameState Board::isCheckmate() {
 			if(m_board[y][x]->getColor() == Players::BLACK) {
 
 				//Generate valid moves
-				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board);
+				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board, {});
 
 				//Add to our set
 				for(auto it : moves) {
@@ -335,7 +332,7 @@ GameState Board::isCheckmate() {
 			} else if (m_board[y][x]->getColor() == Players::WHITE) {
 
 				//Generate valid moves
-				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board);
+				std::vector<Coordinates> moves = m_board[y][x]->generateValidMoves(m_board, {});
 
 				//Add to our set
 				for(auto it : moves) {

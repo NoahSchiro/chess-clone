@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>		//For benchmarking
 
 #include "./graphics/SDLHandler.h"
 #include "board.h"
@@ -18,6 +19,11 @@ int main(int, char **) {
 	//Storage spot for where we might want to move a piece
 	std::vector<Coordinates> validMoves = {};
 	Piece* pieceToMove = nullptr;
+
+	//Storage spot for what tiles are in threat. This will be
+	//used to compute check/checkmate
+	std::vector<Coordinates> whiteTilesInThreat;
+	std::vector<Coordinates> blackTilesInThreat;
 
 	//Who's turn it is. Always starts, white, but
 	//alternates on a successful move
@@ -57,18 +63,10 @@ int main(int, char **) {
     	}
 
     	//Check if either king is in check / checkmate
-    	GameState check = myBoard.isCheckmate();
+    	GameState check = myBoard.isCheckmate(whiteTilesInThreat, blackTilesInThreat);
 
-    	//Print result
-    	if(check == GameState::WHITE_CHECK) {
-    		std::cout << "White king in check!\n";
-    	} else if (check == GameState::BLACK_CHECK) {
-    		std::cout << "Black king in check!\n";
-    	}
-
-    	bool validMoveFlag = false;
-    	
     	//Check if we have clicked somewhere that would be a valid move
+    	bool validMoveFlag = false;
     	for(auto it : validMoves) {
     		if(x == it.x && y == it.y) {
     			validMoveFlag = true;
@@ -102,7 +100,16 @@ int main(int, char **) {
 			   (myBoard.m_board[y][x]->getColor() == turn && myBoard.m_board[y][x]->getType() == PieceTypes::KING)) {
 				
 				//Then we can move
-				validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
+				if(myBoard.m_board[y][x]->getColor() == Players::WHITE) {
+				
+					validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board, whiteTilesInThreat);
+				
+				} else {
+				
+					validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board, blackTilesInThreat);
+				
+				}
+				
 				pieceToMove = myBoard.m_board[y][x];
 			}
 
