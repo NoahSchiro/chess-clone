@@ -291,7 +291,7 @@ void Board::cliShow() {
 GameState Board::isCheckmate(std::vector<Coordinates> &whiteTilesInThreat,
 							 std::vector<Coordinates> &blackTilesInThreat) {
 
-	GameState ans;
+	GameState ans = GameState::WHITE_MOVE;
 
 	//Store where are king is
 	Coordinates whiteKingPos;
@@ -347,15 +347,36 @@ GameState Board::isCheckmate(std::vector<Coordinates> &whiteTilesInThreat,
 		if(whiteKingPos.x == it.x &&
 		   whiteKingPos.y == it.y) {
 
-			return GameState::WHITE_CHECK;
+			//Generate the king's ways of escaping
+		   	auto validMoves = m_board[whiteKingPos.y][whiteKingPos.x]->generateValidMoves(m_board, whiteTilesInThreat);
+
+			//If there are none, then the king is in checkmate
+			if(validMoves.size() > 0) {
+
+				return GameState::WHITE_CHECK;
+			} else {
+				
+				return GameState::WHITE_CHECKMATE;
+			}
 		}
 	}
 
+	//Check if the black's position is threatened
 	for(auto it : blackTilesInThreat) {
 		if(blackKingPos.x == it.x &&
 		   blackKingPos.y == it.y) {
 			
-			return GameState::BLACK_CHECK;
+			//Generate the king's ways of escaping
+		   	auto validMoves = m_board[whiteKingPos.y][whiteKingPos.x]->generateValidMoves(m_board, whiteTilesInThreat);
+			
+			//If there are none, then the king is in checkmate
+			if(validMoves.size() > 0) {
+
+				return GameState::BLACK_CHECK;
+			} else {
+
+				return GameState::BLACK_CHECKMATE;
+			}
 		}
 	}
 

@@ -65,6 +65,14 @@ int main(int, char **) {
     	//Check if either king is in check / checkmate
     	GameState check = myBoard.isCheckmate(whiteTilesInThreat, blackTilesInThreat);
 
+    	if(check == GameState::WHITE_CHECKMATE) {
+    		std::cout << "White is in checkmate!\n";
+    		break;
+    	} else if (check == GameState::BLACK_CHECKMATE) {
+    		std::cout << "Black is in checkmate!\n";
+    		break;
+    	}
+
     	//Check if we have clicked somewhere that would be a valid move
     	bool validMoveFlag = false;
     	for(auto it : validMoves) {

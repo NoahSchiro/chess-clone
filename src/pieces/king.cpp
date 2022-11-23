@@ -1,7 +1,5 @@
 #include "king.h"
 
-#include <iostream>
-
 King::King(Players     color,
 		   Coordinates position)
 	: Piece(PieceTypes::KING, color, position) {}
