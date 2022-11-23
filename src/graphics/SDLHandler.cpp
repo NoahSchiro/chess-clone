@@ -92,26 +92,24 @@ void SDLHandler::drawBackground(std::vector<Coordinates> validMoves) {
     		if ((y % 2 == 0 && x % 2 == 0)||
     		    (y % 2 == 1 && x % 2 == 1)) {
 
-			    //Drawing in "light brown ish"
-			    //TODO: make this look less ugly
-			    SDL_SetRenderDrawColor(m_renderer, 171, 101, 29, 1);
+			    //Drawing in "light brown ish"s
+			    SDL_SetRenderDrawColor(m_renderer, 232, 235, 239, 1);
 
 				//If we have selected a piece and want to
 				//show where it can move, then display a "light red"
 				if(validMoveArea) {
-				    SDL_SetRenderDrawColor(m_renderer, 221, 91, 29, 1);
+				    SDL_SetRenderDrawColor(m_renderer, 255, 235, 239, 1);
 				}
 			    
     		} else {
 
 			    //Drawing in "dark brown ish"
-			    //TODO: make this look less ugly
-			    SDL_SetRenderDrawColor(m_renderer, 91, 67, 33, 1);
+			    SDL_SetRenderDrawColor(m_renderer, 125, 138, 150, 1);
 			    
 			    //If we have selected a piece and want to
 				//show where it can move, then display a "light red"
 				if(validMoveArea) {
-				    SDL_SetRenderDrawColor(m_renderer, 141, 57, 33, 1);
+				    SDL_SetRenderDrawColor(m_renderer, 170, 138, 150, 1);
 				}
     		}
 
