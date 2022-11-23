@@ -23,7 +23,7 @@ public:
 		  Coordinates position);
 
 	//Given the pieces position, what are the valid moves?
-	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8]);
+	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat);
 
 	//Getters
 	PieceTypes getType();

@@ -5,7 +5,7 @@ Rook::Rook(Players     color,
 		   Coordinates position)
 	: Piece(PieceTypes::ROOK, color, position) {}
 
-std::vector<Coordinates> Rook::generateValidMoves(Piece* board[8][8]) {
+std::vector<Coordinates> Rook::generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat) {
 
 	std::vector<Coordinates> ans;
 	Coordinates temp(m_position.x, m_position.y);

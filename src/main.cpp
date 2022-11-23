@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>		//For benchmarking
 
 #include "./graphics/SDLHandler.h"
 #include "board.h"
@@ -18,6 +19,11 @@ int main(int, char **) {
 	//Storage spot for where we might want to move a piece
 	std::vector<Coordinates> validMoves = {};
 	Piece* pieceToMove = nullptr;
+
+	//Storage spot for what tiles are in threat. This will be
+	//used to compute check/checkmate
+	std::vector<Coordinates> whiteTilesInThreat;
+	std::vector<Coordinates> blackTilesInThreat;
 
 	//Who's turn it is. Always starts, white, but
 	//alternates on a successful move
@@ -56,9 +62,19 @@ int main(int, char **) {
     		default : {}
     	}
 
-    	bool validMoveFlag = false;
-    	
+    	//Check if either king is in check / checkmate
+    	GameState check = myBoard.isCheckmate(whiteTilesInThreat, blackTilesInThreat);
+
+    	if(check == GameState::WHITE_CHECKMATE) {
+    		std::cout << "White is in checkmate!\n";
+    		break;
+    	} else if (check == GameState::BLACK_CHECKMATE) {
+    		std::cout << "Black is in checkmate!\n";
+    		break;
+    	}
+
     	//Check if we have clicked somewhere that would be a valid move
+    	bool validMoveFlag = false;
     	for(auto it : validMoves) {
     		if(x == it.x && y == it.y) {
     			validMoveFlag = true;
@@ -79,8 +95,31 @@ int main(int, char **) {
     	} else if (!pieceToMove && myBoard.m_board[y][x]->getColor() == turn) {
 			
 			//Generate the valid moves for that piece
-			validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board);
-			pieceToMove = myBoard.m_board[y][x];
+			//Note we cannot generate these moves if we are in check
+			if(
+
+			   //If we white king is in check and it's white's turn
+			   (turn == Players::WHITE && check != GameState::WHITE_CHECK) ||
+			   
+			   //If the black king is in check and it's black's turn
+			   (turn == Players::BLACK && check != GameState::BLACK_CHECK) ||
+			   
+			   //If we select the king
+			   (myBoard.m_board[y][x]->getColor() == turn && myBoard.m_board[y][x]->getType() == PieceTypes::KING)) {
+				
+				//Then we can move
+				if(myBoard.m_board[y][x]->getColor() == Players::WHITE) {
+				
+					validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board, whiteTilesInThreat);
+				
+				} else {
+				
+					validMoves  = myBoard.m_board[y][x]->generateValidMoves(myBoard.m_board, blackTilesInThreat);
+				
+				}
+				
+				pieceToMove = myBoard.m_board[y][x];
+			}
 
 		//If we have no piece to move and we clicked on blank space, reset
     	} else if (!pieceToMove) {

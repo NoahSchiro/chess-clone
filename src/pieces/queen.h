@@ -11,7 +11,7 @@ public:
 	Queen(Players     color,
 		  Coordinates position);
 
-	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8]) override;
+	virtual std::vector<Coordinates> generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat) override;
 
 	//Getters
 	bool getFirstMove() override;

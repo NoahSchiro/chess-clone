@@ -4,7 +4,7 @@ Queen::Queen(Players     color,
 		     Coordinates position)
 	: Piece(PieceTypes::QUEEN, color, position) {}
 
-std::vector<Coordinates> Queen::generateValidMoves(Piece* board[8][8]) {
+std::vector<Coordinates> Queen::generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat) {
 
 	std::vector<Coordinates> ans;
 	Coordinates temp(m_position.x, m_position.y);

@@ -1,13 +1,11 @@
 #include "king.h"
 
-#include <iostream>
-
 King::King(Players     color,
 		   Coordinates position)
 	: Piece(PieceTypes::KING, color, position) {}
 
 
-std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
+std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat) {
 
 	//Defining the possible move set for a king is pretty easy
 	//We only really need to consider the test case where we are
@@ -159,6 +157,17 @@ std::vector<Coordinates> King::generateValidMoves(Piece* board[8][8]) {
 			temp.y = m_position.y;
 			ans.push_back(temp);
 
+		}
+	}
+
+	//If a tile that is in threat
+	//is in our ans, then remove it
+	for(auto i : tilesInThreat) {
+		for(int j = 0; j < ans.size(); j++) {
+			if(i.x == ans[j].x &&
+			   i.y == ans[j].y) {
+				ans.erase(ans.begin() + j);
+			}
 		}
 	}
 

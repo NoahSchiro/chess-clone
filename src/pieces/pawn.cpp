@@ -4,7 +4,7 @@ Pawn::Pawn(Players     color,
 		   Coordinates position)
 	: Piece(PieceTypes::PAWN, color, position) {}
 
-std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8]) {
+std::vector<Coordinates> Pawn::generateValidMoves(Piece* board[8][8], std::vector<Coordinates> tilesInThreat) {
 	
 	//The pawn is an interesting
 	//case because it depends on it's color
